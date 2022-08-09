@@ -18,7 +18,7 @@ namespace DigitalBookManagement.Model
 
         public virtual DbSet<Book> Books { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
-        public virtual DbSet<UserDetail> UserDetails { get; set; } = null!;
+        public virtual DbSet<Author> Author { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -116,7 +116,7 @@ namespace DigitalBookManagement.Model
                     .HasConstraintName("FK__payment__userId__2B3F6F97");
             });
 
-            modelBuilder.Entity<UserDetail>(entity =>
+            modelBuilder.Entity<Author>(entity =>
             {
                 entity.HasKey(e => e.UserId)
                     .HasName("PK__UserDeta__CB9A1CFFB8CB5B8A");

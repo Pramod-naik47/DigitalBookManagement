@@ -2,7 +2,8 @@
 
 namespace DigitalBookManagement.Repositories
 {
-    public interface IUserService
+    public interface ICreateAuthorAccout
     {
+        string CreateAuthor(Author userDetails);
     }
 }

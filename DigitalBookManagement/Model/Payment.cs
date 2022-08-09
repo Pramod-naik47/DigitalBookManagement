@@ -12,6 +12,6 @@ namespace DigitalBookManagement.Model
         public DateTime? PaymentDate { get; set; }
 
         public virtual Book? Book { get; set; }
-        public virtual UserDetail? User { get; set; }
+        public virtual Author? User { get; set; }
     }
 }

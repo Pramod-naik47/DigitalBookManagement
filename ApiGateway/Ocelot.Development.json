@@ -33,7 +33,7 @@
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/Book",
+      "DownstreamPathTemplate": "/api/Book",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "POST" ],
       "RouteIsCaseSensitive": false,
@@ -49,6 +49,34 @@
         "AuthenticationProviderKey": "GatewayAuthenticationKey",
         "AllowedScopes": []
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/User",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "GET" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7069
+        }
+      ],
+      "UpstreamPathTemplate": "/api/userSearch",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/CreateAuthorAccount",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "POST" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7069
+        }
+      ],
+      "UpstreamPathTemplate": "/api/CreateAuthorAccount",
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ]
 }

@@ -10,19 +10,5 @@ namespace DigitalBookManagement.Services
         {
             _digitalBookManagementContext = digitalBookManagementContext;
         }
-
-        public string CreateUser(UserDetail userDetails)
-        {
-            try
-            {
-                _digitalBookManagementContext.UserDetails.Add(userDetails);
-                _digitalBookManagementContext.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                return $"Operation failed {e.Message}";
-            }
-            return "User saved";
-        }
     }
 }

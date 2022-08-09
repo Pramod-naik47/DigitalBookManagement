@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace DigitalBookManagement.Model
+﻿namespace DigitalBookManagement.Model
 {
-    public partial class Book
+    public class UserSearchCriteria
     {
-        public Book()
-        {
-            Payments = new HashSet<Payment>();
-        }
-
         public long BookId { get; set; }
         public byte[]? Logo { get; set; }
         public string BookTitle { get; set; } = null!;
@@ -23,8 +14,5 @@ namespace DigitalBookManagement.Model
         public bool? Active { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? ModifiedDate { get; set; } = DateTime.Now;
-        public virtual Author? User { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
-
     }
 }

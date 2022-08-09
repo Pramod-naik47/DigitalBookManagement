@@ -1,24 +1,16 @@
-using DigitalBookManagement.Model;
-using DigitalBookManagement.Repositories;
+﻿using DigitalBookManagement.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DigitalBookManagement.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/User")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        [HttpGet]
+        public ActionResult<string> SearchBooks([FromBody]Book book)
         {
-            _userService = userService;
-        }
-
-        [HttpPost]
-        public ActionResult<string> CreateUser([FromBody]UserDetail userDetails)
-        {
-            string result = _userService.CreateUser(userDetails);
-            return Ok(result);
+            return Ok("User without authentication");
         }
     }
 }

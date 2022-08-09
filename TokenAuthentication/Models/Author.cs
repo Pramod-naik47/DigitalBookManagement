@@ -2,15 +2,15 @@
 
 namespace TokenAuthentication.Models
 {
-    public class UserDetail
+    public class Author
     {
-        public UserDetail()
+        public Author()
         {
         }
         [Key]
         public long UserId { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public string UserType { get; set; } = null!;
+        public string? UserType { get; set; }
     }
 }

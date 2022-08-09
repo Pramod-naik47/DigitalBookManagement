@@ -2,7 +2,7 @@
 
 namespace TokenAuthentication.Services
 {
-    public interface IUserTokenService
+    public interface IAuthorTokenService
     {
         bool ValidateUser(string userName, string password);
     }

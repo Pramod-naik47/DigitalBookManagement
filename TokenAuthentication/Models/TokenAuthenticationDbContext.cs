@@ -12,7 +12,7 @@ namespace TokenAuthentication.Models
             : base(options)
         {
         }
-        public virtual DbSet<UserDetail> UserDetails { get; set; } = null!;
+        public virtual DbSet<Author> UserDetails { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

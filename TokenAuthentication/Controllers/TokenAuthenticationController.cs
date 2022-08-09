@@ -12,19 +12,19 @@ namespace TokenAuthentication.Controllers
     [Route("[controller]")]
     public class TokenAuthenticationController : ControllerBase
     {
-        private readonly IUserTokenService _userTokenService;
+        private readonly IAuthorTokenService _authorTokenService;
         private readonly IConfiguration _configuration;
-        public TokenAuthenticationController(IUserTokenService userTokenService, IConfiguration configuration)
+        public TokenAuthenticationController(IAuthorTokenService authorTokenService, IConfiguration configuration)
         {
-            _userTokenService = userTokenService;
+            _authorTokenService = authorTokenService;
             this._configuration = configuration;
         }
 
         [HttpPost]
-        public ActionResult<string> Validate([FromBody]UserDetail userdetails)
+        public ActionResult<string> Validate([FromBody]Author author)
         {
             string result = string.Empty;
-            if (_userTokenService.ValidateUser(userdetails.UserName, userdetails.Password))
+            if (_authorTokenService.ValidateUser(author.UserName, author.Password))
             {
                 result = BuildToken(_configuration["Jwt:Key"],
                                         _configuration["Jwt:Issuer"],
@@ -33,7 +33,7 @@ namespace TokenAuthentication.Controllers
                                             _configuration["Jwt:Aud1"],
                                             _configuration["Jwt:Aud2"]
                                         },
-                                        userdetails.UserName);
+                                        author.UserName);
 
             }
             else

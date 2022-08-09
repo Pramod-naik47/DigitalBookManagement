@@ -2,10 +2,10 @@
 
 namespace TokenAuthentication.Services
 {
-    public class UserTokenService : IUserTokenService
+    public class AuthorTokenService : IAuthorTokenService
     {
         public TokenAuthenticationDbContext _tokenAuthenticationDbContext { get; set; }
-        public UserTokenService(TokenAuthenticationDbContext tokenAuthenticationDbContext)
+        public AuthorTokenService(TokenAuthenticationDbContext tokenAuthenticationDbContext)
         {
             _tokenAuthenticationDbContext = tokenAuthenticationDbContext;
         }

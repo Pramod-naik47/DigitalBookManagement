@@ -1,5 +1,6 @@
 ﻿using DigitalBookManagement.Model;
 using DigitalBookManagement.Repositories;
+using DigitalBookManagement.SharedResource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,12 @@ namespace DigitalBookManagement.Controllers
         {
             string result = _authorService.CreateBook(book);
             return Ok(result);
+        }
+        [HttpGet("GetAllBooks")]
+        public IEnumerable<Book> GetAllBook([FromBody]CommonResource commonResource)
+        {
+            var result = _authorService.GetAllBooks(commonResource.UserId);
+            return result;
         }
     }
 }

@@ -31,5 +31,15 @@ namespace DigitalBookManagement.Services
             return "Book saved suceessfully";
         }
 
+        /// <summary>
+        /// This method will get the all the books created by logged in author
+        /// </summary>
+        /// <returns>Book list</returns>
+        public IEnumerable<Book> GetAllBooks(long userId)
+        {
+            var request = _digitalBookManagementContext.Books.Where(x => x.UserId == userId);
+            return request;
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/Book",
+      "DownstreamPathTemplate": "/api/Book/GetBooks",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "GET" ],
       "RouteIsCaseSensitive": false,
@@ -11,7 +11,7 @@
           "Port": 7069
         }
       ],
-      "UpstreamPathTemplate": "/api/getBook",
+      "UpstreamPathTemplate": "/api/getBook/pramod",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationKey",

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DigitalBookManagement.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Book")]
     [Authorize]
     public class BookController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace DigitalBookManagement.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetBooks")]
         public ActionResult<string> GetBooks()
         {
             string result = "Book1, Book2";

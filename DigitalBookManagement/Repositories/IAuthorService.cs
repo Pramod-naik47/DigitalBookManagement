@@ -2,7 +2,7 @@
 
 namespace DigitalBookManagement.Repositories
 {
-    public interface IBookService
+    public interface IAuthorService
     {
         string CreateBook(Book book);
     }

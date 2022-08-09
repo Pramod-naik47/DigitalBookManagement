@@ -1,4 +1,5 @@
 ﻿using DigitalBookManagement.Model;
+using DigitalBookManagement.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DigitalBookManagement.Controllers
@@ -7,10 +8,17 @@ namespace DigitalBookManagement.Controllers
     [Route("api/User")]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<string> SearchBooks([FromBody]Book book)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            return Ok("User without authentication");
+            _userService = userService;
+        }
+
+        [HttpGet("SearchForBook")]
+        public IEnumerable<Book> SearchBooks([FromBody]UserSearchCriteria book)
+        {
+            var result = _userService.SearchBook(book);
+            return result.ToList();
         }
     }
 }

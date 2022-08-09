@@ -3,10 +3,10 @@ using DigitalBookManagement.Repositories;
 
 namespace DigitalBookManagement.Services
 {
-    public class BookService : IBookService
+    public class AuthorService : IAuthorService
     {
         public DigitalBookManagementContext _digitalBookManagementContext { get; set; }
-        public BookService(DigitalBookManagementContext digitalBookManagementContext)
+        public AuthorService(DigitalBookManagementContext digitalBookManagementContext)
         {
             _digitalBookManagementContext = digitalBookManagementContext;
         }

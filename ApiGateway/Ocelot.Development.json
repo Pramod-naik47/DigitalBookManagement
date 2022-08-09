@@ -18,7 +18,7 @@
         "AllowedScopes": []
       }
     },
-    {
+    { //https://localhost:7151/api/getToken
       "DownstreamPathTemplate": "/TokenAuthentication",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "POST" ],
@@ -32,8 +32,8 @@
       "UpstreamPathTemplate": "/api/getToken",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    {
-      "DownstreamPathTemplate": "/api/Book",
+    { //https://localhost:7151/api/author/addBook
+      "DownstreamPathTemplate": "/api/Author/CreateBook",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "POST" ],
       "RouteIsCaseSensitive": false,
@@ -43,15 +43,15 @@
           "Port": 7069
         }
       ],
-      "UpstreamPathTemplate": "/api/books/addBook",
+      "UpstreamPathTemplate": "/api/author/addBook",
       "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationKey",
         "AllowedScopes": []
       }
     },
-    {
-      "DownstreamPathTemplate": "/api/User",
+    { //https://localhost:7151/api/userSearch
+      "DownstreamPathTemplate": "/api/User/SearchForBook",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "GET" ],
       "RouteIsCaseSensitive": false,
@@ -64,7 +64,7 @@
       "UpstreamPathTemplate": "/api/userSearch",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    {
+    { //https://localhost:7151/api/CreateAuthorAccount
       "DownstreamPathTemplate": "/CreateAuthorAccount",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "POST" ],

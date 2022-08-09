@@ -11,18 +11,18 @@ namespace DigitalBookManagement.Services
             _digitalBookManagementContext = digitalBookManagementContext;
         }
 
-        public string CreateAuthor(Author userDetails)
+        public string CreateAuthor(Author author)
         {
             try
             {
-                _digitalBookManagementContext.Author.Add(userDetails);
+                _digitalBookManagementContext.Author.Add(author);
                 _digitalBookManagementContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return $"Operation failed {e.Message}";
+                return $"Operation failed {ex.Message}";
             }
-            return "User saved";
+            return $"Author account for {author.UserName} created successfully";
         }
     }
 }

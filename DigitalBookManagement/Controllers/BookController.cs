@@ -8,7 +8,7 @@ namespace DigitalBookManagement.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize]
-    public class BookController :ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
         public BookController(IBookService bookService)
@@ -22,6 +22,7 @@ namespace DigitalBookManagement.Controllers
             string result = _bookService.CreateBook(book);
             return Ok(result);
         }
+
         [HttpGet]
         public ActionResult<string> GetBooks()
         {

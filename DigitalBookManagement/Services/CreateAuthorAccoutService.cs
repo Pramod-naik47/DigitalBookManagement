@@ -11,6 +11,11 @@ namespace DigitalBookManagement.Services
             _digitalBookManagementContext = digitalBookManagementContext;
         }
 
+        /// <summary>
+        /// This method will create account for author
+        /// </summary>
+        /// <param name="author">author</param>
+        /// <returns>return a  message whether the author is created or not</returns>
         public string CreateAuthor(Author author)
         {
             try

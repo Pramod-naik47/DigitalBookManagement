@@ -78,6 +78,25 @@
       ],
       "UpstreamPathTemplate": "/api/CreateAuthorAccount",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      //https://localhost:7151/api/author/login
+      "DownstreamPathTemplate": "/api/Author/AuthorLogin",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "POST" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7069
+        }
+      ],
+      "UpstreamPathTemplate": "/api/author/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationKey",
+        "AllowedScopes": []
+      }
     }
   ]
 }

@@ -41,5 +41,18 @@ namespace DigitalBookManagement.Services
             return request;
         }
 
+        public string AuthorLogin(Author author)
+        {
+            string message = string.Empty;
+            var result = _digitalBookManagementContext.Author.Where(x => x.UserName == author.UserName && x.Password == author.Password).FirstOrDefault();
+
+            if (result != null)
+                message = $"Author {author.UserName} logged in successfully";
+            else
+                message = "Invalid user name or password";
+
+            return message;
+        }
+
     }
 }

@@ -23,11 +23,19 @@ namespace DigitalBookManagement.Controllers
             string result = _authorService.CreateBook(book);
             return Ok(result);
         }
+
         [HttpGet("GetAllBooks")]
         public IEnumerable<Book> GetAllBook([FromBody]CommonResource commonResource)
         {
             var result = _authorService.GetAllBooks(commonResource.UserId);
             return result;
+        }
+
+        [HttpPost("AuthorLogin")]
+        public ActionResult<string> AuthorLogin([FromBody]Author author)
+        {
+            string result = _authorService.AuthorLogin(author);
+            return Ok(result);
         }
     }
 }

@@ -34,6 +34,9 @@ namespace DigitalBookManagement.Services
             if (criteria.PublistDate != null)
                 books = request.Where(x => x.PublistDate == criteria.PublistDate);
 
+            if (criteria.UserId != null)
+                books = request.Where(x => x.UserId == criteria.UserId); 
+
             return books;
         }
     }

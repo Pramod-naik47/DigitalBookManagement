@@ -41,6 +41,11 @@ namespace DigitalBookManagement.Services
             return request;
         }
 
+        /// <summary>
+        /// This method will take user name and password validate the user
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns>return a message whether the login is scuccessfull or not</returns>
         public string AuthorLogin(Author author)
         {
             string message = string.Empty;

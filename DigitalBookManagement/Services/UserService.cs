@@ -13,27 +13,28 @@ namespace DigitalBookManagement.Services
 
         public IEnumerable<Book> SearchBook(UserSearchCriteria criteria)
         {
+            IEnumerable<Book> books = new List<Book>();
             var request = _digitalBookManagementContext.Books;
 
             if (!string.IsNullOrWhiteSpace(criteria.BookTitle))
-                request.Where(x => x.BookTitle == criteria.BookTitle);
+                books =  request.Where(x => x.BookTitle == criteria.BookTitle);
 
             if (!string.IsNullOrWhiteSpace(criteria.Publisher))
-                request.Where(x => x.Publisher == criteria.Publisher);
+                books = request.Where(x => x.Publisher == criteria.Publisher);
 
             if (!string.IsNullOrWhiteSpace(criteria.Category))
-                request.Where(x => x.Category == criteria.Category);
+                books = request.Where(x => x.Category == criteria.Category);
 
             if (criteria.Price != null)
-                request.Where(x => x.Price == criteria.Price);
+                books = request.Where(x => x.Price == criteria.Price);
 
             if (!string.IsNullOrWhiteSpace(criteria.Category))
-                request.Where(x => x.Category == criteria.Category);
+                books = request.Where(x => x.Category == criteria.Category);
 
             if (criteria.PublistDate != null)
-                request.Where(x => x.PublistDate == criteria.PublistDate);
+                books = request.Where(x => x.PublistDate == criteria.PublistDate);
 
-            return request;
+            return books;
         }
     }
 }

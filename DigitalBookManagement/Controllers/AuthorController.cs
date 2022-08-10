@@ -37,5 +37,19 @@ namespace DigitalBookManagement.Controllers
             string result = _authorService.AuthorLogin(author);
             return Ok(result);
         }
+
+        [HttpPut("EditBook")]
+        public ActionResult<string> EditBook([FromBody]Book book)
+        {
+            string result = _authorService.EditBook(book);
+            return result;
+        }
+
+        [HttpPut("LockOrUnlocBook")]
+        public ActionResult<string> LockOrUnlocBook([FromBody] Book book)
+        {
+            string result = _authorService.LockOrUnlocBook(book);
+            return result;
+        }
     }
 }

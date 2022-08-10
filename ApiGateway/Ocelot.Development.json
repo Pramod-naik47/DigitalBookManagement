@@ -97,6 +97,44 @@
         "AuthenticationProviderKey": "GatewayAuthenticationKey",
         "AllowedScopes": []
       }
+    },
+    {
+      //https://localhost:7151/api/author/EditBook
+      "DownstreamPathTemplate": "/api/Author/EditBook",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "PUT" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7069
+        }
+      ],
+      "UpstreamPathTemplate": "/api/author/EditBook",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      //https://localhost:7151/api/author/LockOrUnlocBook
+      "DownstreamPathTemplate": "/api/Author/LockOrUnlocBook",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "PUT" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7069
+        }
+      ],
+      "UpstreamPathTemplate": "/api/author/LockOrUnlocBook/book",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationKey",
+        "AllowedScopes": []
+      }
     }
   ]
 }

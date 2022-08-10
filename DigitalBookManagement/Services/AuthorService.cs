@@ -48,16 +48,85 @@ namespace DigitalBookManagement.Services
         /// <returns>return a message whether the login is scuccessfull or not</returns>
         public string AuthorLogin(Author author)
         {
-            string message = string.Empty;
-            var result = _digitalBookManagementContext.Author.Where(x => x.UserName == author.UserName && x.Password == author.Password).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(author.UserName) && !string.IsNullOrWhiteSpace(author.Password))
+            {
+                string message = string.Empty;
+                var result = _digitalBookManagementContext.Author.Where(x => x.UserName == author.UserName && x.Password == author.Password).FirstOrDefault();
 
-            if (result != null)
-                message = $"Author {author.UserName} logged in successfully";
-            else
-                message = "Invalid user name or password";
+                if (result != null)
+                    message = $"Author {author.UserName} logged in successfully";
+                else
+                    message = "Invalid user name or password";
 
-            return message;
+                return message;
+            }
+            return $"Please provide valid input";
         }
 
+        /// <summary>
+        /// This method will update the given book
+        /// </summary>
+        /// <param name="book">Book</param>
+        /// <returns>message whether the operation is scuccessfull or not</returns>
+        public string EditBook(Book book)
+        {
+            try
+            {
+                var result = _digitalBookManagementContext.Books.Where(x => x.BookId == book.BookId).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.Publisher = book.Publisher;
+                    result.BookTitle = book.BookTitle;
+                    result.PublistDate = book.PublistDate;
+                    result.ModifiedDate = DateTime.Now;
+                    result.Category = book.Category;
+                    result.Content = book.Content;
+                    result.Active = book.Active;
+                    result.Logo = book.Logo;
+                    result.Price = book.Price;
+                    result.User = book.User;
+
+                    _digitalBookManagementContext.Books.Update(result);
+                    _digitalBookManagementContext.SaveChanges();
+
+                    return $"Book updated successfully";
+                }
+                return $"Input provided is not valid";
+            }
+            catch (Exception ex)
+            {
+                return $"Operation operation faild : {ex.Message}";
+            }
+        }
+        /// <summary>
+        /// This method will lock or unlock the book
+        /// </summary>
+        /// <param name="book">book</param>
+        /// <returns>return a message whether the book is locked or unlocked</returns>
+        public string LockOrUnlocBook(Book book)
+        {
+            try
+            {
+                var result = _digitalBookManagementContext.Books.Where(x => x.BookId == book.BookId).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.Active = book.Active;
+                    result.ModifiedDate = DateTime.Now;
+
+                    _digitalBookManagementContext.Books.Update(result);
+                    _digitalBookManagementContext.SaveChanges();
+                    string message = result.Active == true ? $"Book {result.BookTitle}unlocked successfully" : $"Book {result.BookTitle} locked successfully";
+
+                    return message;
+                }
+                return $"Input provided is not valid";
+            }
+            catch (Exception ex)
+            {
+                return $"Operation operation faild : {ex.Message}";
+            }
+        }
     }
 }

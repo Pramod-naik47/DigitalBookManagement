@@ -32,7 +32,7 @@ namespace DigitalBookManagement.Services
                 books = request.Where(x => x.Category == criteria.Category);
 
             if (criteria.PublistDate != null)
-                books = request.Where(x => x.PublistDate == criteria.PublistDate);
+                books = request.Where(x => x.PublishDate == criteria.PublistDate);
 
             if (criteria.UserId != null)
                 books = request.Where(x => x.UserId == criteria.UserId); 

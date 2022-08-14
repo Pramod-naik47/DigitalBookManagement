@@ -12,7 +12,7 @@ namespace TokenAuthentication.Services
 
         public bool ValidateUser(string userName, string password)
         {
-            var result = _tokenAuthenticationDbContext.UserDetails.Where(x => x.UserName == userName && x.Password == password).FirstOrDefault();
+            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.Password == password).FirstOrDefault();
 
             return result != null ? true : false;
         }

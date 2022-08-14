@@ -2,9 +2,9 @@
 
 namespace TokenAuthentication.Models
 {
-    public class Author
+    public class User
     {
-        public Author()
+        public User()
         {
         }
         [Key]

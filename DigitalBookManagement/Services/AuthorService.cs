@@ -46,15 +46,15 @@ namespace DigitalBookManagement.Services
         /// </summary>
         /// <param name="author"></param>
         /// <returns>return a message whether the login is scuccessfull or not</returns>
-        public string AuthorLogin(Author author)
+        public string AuthorLogin(User user)
         {
-            if (!string.IsNullOrWhiteSpace(author.UserName) && !string.IsNullOrWhiteSpace(author.Password))
+            if (!string.IsNullOrWhiteSpace(user.UserName) && !string.IsNullOrWhiteSpace(user.Password))
             {
                 string message = string.Empty;
-                var result = _digitalBookManagementContext.Author.Where(x => x.UserName == author.UserName && x.Password == author.Password).FirstOrDefault();
+                var result = _digitalBookManagementContext.Users.Where(x => x.UserName == user.UserName && x.Password == user.Password).FirstOrDefault();
 
                 if (result != null)
-                    message = $"Author {author.UserName} logged in successfully";
+                    message = $"Author {user.UserName} logged in successfully";
                 else
                     message = "Invalid user name or password";
 
@@ -78,7 +78,7 @@ namespace DigitalBookManagement.Services
                 {
                     result.Publisher = book.Publisher;
                     result.BookTitle = book.BookTitle;
-                    result.PublistDate = book.PublistDate;
+                    result.PublishDate = book.PublishDate;
                     result.ModifiedDate = DateTime.Now;
                     result.Category = book.Category;
                     result.Content = book.Content;

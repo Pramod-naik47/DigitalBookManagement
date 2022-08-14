@@ -21,10 +21,10 @@ namespace TokenAuthentication.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> Validate([FromBody]Author author)
+        public ActionResult<string> Validate([FromBody]User user)
         {
             string result = string.Empty;
-            if (_authorTokenService.ValidateUser(author.UserName, author.Password))
+            if (_authorTokenService.ValidateUser(user.UserName, user.Password))
             {
                 result = BuildToken(_configuration["Jwt:Key"],
                                         _configuration["Jwt:Issuer"],
@@ -33,7 +33,7 @@ namespace TokenAuthentication.Controllers
                                             _configuration["Jwt:Aud1"],
                                             _configuration["Jwt:Aud2"]
                                         },
-                                        author.UserName);
+                                        user.UserName);
 
             }
             else

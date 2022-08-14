@@ -32,7 +32,7 @@ namespace DigitalBookManagement.Controllers
         }
 
         [HttpPost("AuthorLogin")]
-        public ActionResult<string> AuthorLogin([FromBody]Author author)
+        public ActionResult<string> AuthorLogin([FromBody]User author)
         {
             string result = _authorService.AuthorLogin(author);
             return Ok(result);

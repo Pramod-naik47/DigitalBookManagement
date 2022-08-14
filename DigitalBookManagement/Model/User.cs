@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DigitalBookManagement.Model
 {
-    public partial class Author
+    public partial class User
     {
-        public Author()
+        public User()
         {
             Books = new HashSet<Book>();
             Payments = new HashSet<Payment>();

@@ -15,7 +15,7 @@ namespace DigitalBookManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> CreateAuthor([FromBody]Author userDetails)
+        public ActionResult<string> CreateAuthor([FromBody]User userDetails)
         {
             string result = _createAuthorAccout.CreateAuthor(userDetails);
             return Ok(result);

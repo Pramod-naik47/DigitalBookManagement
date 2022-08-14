@@ -16,11 +16,11 @@ namespace DigitalBookManagement.Services
         /// </summary>
         /// <param name="author">author</param>
         /// <returns>return a  message whether the author is created or not</returns>
-        public string CreateAuthor(Author author)
+        public string CreateAuthor(User author)
         {
             try
             {
-                _digitalBookManagementContext.Author.Add(author);
+                _digitalBookManagementContext.Users.Add(author);
                 _digitalBookManagementContext.SaveChanges();
             }
             catch (Exception ex)

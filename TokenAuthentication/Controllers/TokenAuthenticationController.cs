@@ -31,7 +31,8 @@ namespace TokenAuthentication.Controllers
                                         new[]
                                         {
                                             _configuration["Jwt:Aud1"],
-                                            _configuration["Jwt:Aud2"]
+                                            _configuration["Jwt:Aud2"],
+                                            _configuration["Jwt:Aud3"]
                                         },
                                         user.UserName);
 

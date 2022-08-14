@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DigitalBookManagement.Model
+namespace Reader.Models
 {
-    public partial class DigitalBookManagementContext : DbContext
+    public partial class ReaderBookManagementContext : DbContext
     {
-        public DigitalBookManagementContext()
+        public ReaderBookManagementContext()
         {
         }
 
-        public DigitalBookManagementContext(DbContextOptions<DigitalBookManagementContext> options)
+        public ReaderBookManagementContext(DbContextOptions<ReaderBookManagementContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<Book> Books { get; set; } = null!;
-        public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -84,36 +83,6 @@ namespace DigitalBookManagement.Model
                     .WithMany(p => p.Books)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__book__userId__276EDEB3");
-            });
-
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.ToTable("payment");
-
-                entity.Property(e => e.PaymentId).HasColumnName("paymentId");
-
-                entity.Property(e => e.BookId).HasColumnName("bookId");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.PaymentDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("paymentDate");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
-
-                entity.HasOne(d => d.Book)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.BookId)
-                    .HasConstraintName("FK__payment__bookId__2C3393D0");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__payment__userId__2B3F6F97");
             });
 
             modelBuilder.Entity<User>(entity =>

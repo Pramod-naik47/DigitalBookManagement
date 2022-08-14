@@ -51,18 +51,18 @@
         "AllowedScopes": []
       }
     },
-    { //https://localhost:7151/api/userSearch
-      "DownstreamPathTemplate": "/api/User/SearchForBook",
+    { //https://localhost:7151/api/v1/digitalbooks/books/search
+      "DownstreamPathTemplate": "/api/Reader/SearchForBook",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "GET" ],
       "RouteIsCaseSensitive": false,
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7069
+          "Port": 7243
         }
       ],
-      "UpstreamPathTemplate": "/api/userSearch",
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/books/search",
       "UpstreamHttpMethod": [ "GET" ]
     },
     { //https://localhost:7151/api/CreateAuthorAccount

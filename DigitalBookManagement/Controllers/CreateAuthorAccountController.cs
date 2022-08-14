@@ -8,17 +8,17 @@ namespace DigitalBookManagement.Controllers
     [Route("[controller]")]
     public class CreateAuthorAccountController : ControllerBase
     {
-        private readonly ICreateAuthorAccout _createAuthorAccout;
-        public CreateAuthorAccountController(ICreateAuthorAccout createAuthorAccout)
-        {
-            _createAuthorAccout = createAuthorAccout;
-        }
+        //private readonly ICreateAuthorAccout _createAuthorAccout;
+        //public CreateAuthorAccountController(ICreateAuthorAccout createAuthorAccout)
+        //{
+        //    _createAuthorAccout = createAuthorAccout;
+        //}
 
-        [HttpPost]
-        public ActionResult<string> CreateAuthor([FromBody]User userDetails)
-        {
-            string result = _createAuthorAccout.CreateAuthor(userDetails);
-            return Ok(result);
-        }
+        //[HttpPost]
+        //public ActionResult<string> CreateAuthor([FromBody]User userDetails)
+        //{
+        //    string result = _createAuthorAccout.CreateAuthor(userDetails);
+        //    return Ok(result);
+        //}
     }
 }

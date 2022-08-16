@@ -24,7 +24,8 @@ namespace TokenAuthentication.Controllers
         public ActionResult<string> Validate([FromBody]User user)
         {
             string result = string.Empty;
-            if (_authorTokenService.ValidateUser(user.UserName, user.Password))
+            User validate = _authorTokenService.ValidateUser(user.UserName, user.Password);
+            if (validate != null)
             {
                 result = BuildToken(_configuration["Jwt:Key"],
                                         _configuration["Jwt:Issuer"],
@@ -34,22 +35,26 @@ namespace TokenAuthentication.Controllers
                                             _configuration["Jwt:Aud2"],
                                             _configuration["Jwt:Aud3"]
                                         },
-                                        user.UserName);
+                                        validate.UserName,
+                                        validate.UserType,
+                                        validate.UserId);
 
             }
             else
             {
-                result = "Not authorised";
+                result = "Not valid user";
             }
 
             return Ok(result);
         }
 
-        public string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName)
+        public string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.UniqueName, userName)
+                new Claim("UserName", userName),
+                new Claim("UserType", userType),
+                new Claim("UserId", userId.ToString()),
             };
 
             claims.AddRange(audience.Select(aud => new Claim(JwtRegisteredClaimNames.Aud, aud)));

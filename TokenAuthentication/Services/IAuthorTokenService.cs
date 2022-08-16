@@ -4,6 +4,6 @@ namespace TokenAuthentication.Services
 {
     public interface IAuthorTokenService
     {
-        bool ValidateUser(string userName, string password);
+        User ValidateUser(string userName, string password);
     }
 }

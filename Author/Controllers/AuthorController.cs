@@ -3,6 +3,7 @@ using Author.Models;
 using Author.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Author.Controllers
 {
@@ -20,7 +21,17 @@ namespace Author.Controllers
         [HttpPost("CreateBook")]
         public ActionResult<string> CreateBook([FromBody] Book book)
         {
-            string result = _authorService.CreateBook(book);
+            string result = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            
+            if (identity != null)
+            {
+                AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+                if (claim.UserType == "Author")
+                    result = _authorService.CreateBook(book);
+                else
+                    result = "User is not valid";
+            }
             return Ok(result);
         }
 

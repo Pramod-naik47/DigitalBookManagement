@@ -20,7 +20,6 @@ namespace Author.Services
         {
             try
             {
-
                 _digitalBookManagementContext.Books.Add(book);
                 _digitalBookManagementContext.SaveChanges();
             }

@@ -27,6 +27,7 @@ namespace Author.Controllers
             if (identity != null)
             {
                 AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+
                 if (claim.UserType == "Author")
                     result = _authorService.CreateBook(book);
                 else
@@ -36,10 +37,18 @@ namespace Author.Controllers
         }
 
         [HttpGet("GetAllBooks")]
-        public IEnumerable<Book> GetAllBook([FromBody]CommonResource commonResource)
+        public IEnumerable<Book> GetAllBook()
         {
-            var result = _authorService.GetAllBooks(commonResource.UserId);
-            return result;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            
+            if (identity != null)
+            {
+                AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+
+                if (!string.IsNullOrWhiteSpace(claim.UserId))
+                    return  _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
+            }
+            return null;
         }
 
         [HttpPost("AuthorLogin")]

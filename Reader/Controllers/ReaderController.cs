@@ -15,10 +15,10 @@ namespace Reader.Controllers
         }
 
         [HttpGet("SearchForBook")]
-        public IEnumerable<Book> SearchBooks([FromBody] ReaderSearchCriteria book)
+        public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
-            var result = _readerService.SearchBook(book);
-            return result.ToList();
+            var result = _readerService.SearchBook(bookTitle, category, author, price, publisher);
+            return Ok(result);
         }
     }
 }

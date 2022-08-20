@@ -14,6 +14,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IReaderService, ReaderService>();
 builder.Services.AddDbContext<ReaderBookManagementContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
+builder.Services.AddCors((setup) =>
+{
+    setup.AddPolicy("default", (options) =>
+    {
+        options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("default");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

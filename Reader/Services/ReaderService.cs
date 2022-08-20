@@ -11,33 +11,30 @@ namespace Reader.Services
             _readerlBookManagementContext = readerBookManagementContext;
         }
 
-        public IEnumerable<Book> SearchBook(ReaderSearchCriteria criteria)
+        public IEnumerable<Book> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
             IEnumerable<Book> books = new List<Book>();
             var request = _readerlBookManagementContext.Books;
 
-            if (!string.IsNullOrWhiteSpace(criteria.BookTitle))
-                books = request.Where(x => x.BookTitle == criteria.BookTitle);
+            if (!string.IsNullOrWhiteSpace(bookTitle))
+                books = request.Where(x => x.BookTitle == bookTitle);
 
-            if (!string.IsNullOrWhiteSpace(criteria.Publisher))
-                books = request.Where(x => x.Publisher == criteria.Publisher);
+            if (!string.IsNullOrWhiteSpace(publisher))
+                books = request.Where(x => x.Publisher == publisher);
 
-            if (!string.IsNullOrWhiteSpace(criteria.Category))
-                books = request.Where(x => x.Category == criteria.Category);
+            if (!string.IsNullOrWhiteSpace(category))
+                books = request.Where(x => x.Category == category);
 
-            if (criteria.Price != null)
-                books = request.Where(x => x.Price == criteria.Price);
+            if (price != null && price != 0)
+                books = request.Where(x => x.Price == price);
 
-            if (!string.IsNullOrWhiteSpace(criteria.Category))
-                books = request.Where(x => x.Category == criteria.Category);
+            //if (criteria.PublistDate != null)
+            //    books = request.Where(x => x.PublishDate == criteria.PublistDate);
 
-            if (criteria.PublistDate != null)
-                books = request.Where(x => x.PublishDate == criteria.PublistDate);
+            //if (criteria.UserId != null)
+            //    books = request.Where(x => x.UserId == criteria.UserId);
 
-            if (criteria.UserId != null)
-                books = request.Where(x => x.UserId == criteria.UserId);
-
-            return books;
+            return books.ToList();
         }
     }
 }

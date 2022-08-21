@@ -127,5 +127,16 @@ namespace Author.Services
                 return $"Operation operation faild : {ex.Message}";
             }
         }
+
+        public void DeleteBook(long bookId)
+        {
+            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId);
+
+            if (book != null)
+            {
+                _digitalBookManagementContext.Remove(book);
+                _digitalBookManagementContext.SaveChanges();
+            }
+        }
     }
 }

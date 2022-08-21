@@ -6,9 +6,9 @@ namespace Author.Repositories
     {
         string CreateBook(Book book);
         IEnumerable<Book> GetAllBooks(long userId);
-
         string AuthorLogin(User user);
         string EditBook(Book book);
         string LockOrUnlocBook(Book book);
+        void DeleteBook(long bookId);
     }
 }

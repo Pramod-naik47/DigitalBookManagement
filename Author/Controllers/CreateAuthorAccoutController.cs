@@ -16,10 +16,10 @@ namespace Author.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> CreateAuthor([FromBody] User userDetails)
+        public IActionResult CreateAuthor([FromBody] User userDetails)
         {
             string result = _createAuthorAccout.CreateAuthor(userDetails);
-            return Ok(result);
+            return Ok(result.ToList());
         }
     }
 }

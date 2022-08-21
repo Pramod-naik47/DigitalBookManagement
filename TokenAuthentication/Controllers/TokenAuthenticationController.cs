@@ -21,7 +21,7 @@ namespace TokenAuthentication.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> Validate([FromBody]User user)
+        public IActionResult Validate([FromBody]User user)
         {
             string result = string.Empty;
             User validate = _authorTokenService.ValidateUser(user.UserName, user.Password);
@@ -38,14 +38,22 @@ namespace TokenAuthentication.Controllers
                                         validate.UserName,
                                         validate.UserType,
                                         validate.UserId);
-
+                return Ok(new TokenModel
+                {
+                    Token = result,
+                    IsAuthenticated = true,
+                    Message = "Validation sucessfull"
+                });
             }
             else
             {
-                result = "Not valid user";
+                return Ok(new TokenModel
+                {
+                    Token = result,
+                    IsAuthenticated = false,
+                    Message = "Not a valid user"
+                });
             }
-
-            return Ok(result);
         }
 
         public string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)

@@ -14,11 +14,11 @@
         public decimal? Price { get; set; }
         public long? UserId { get; set; }
         public string? Publisher { get; set; }
-        public DateTime? PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; } = DateTime.Now;
         public string? Content { get; set; }
         public bool? Active { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
+        public DateTime? ModifiedDate { get; set; } = DateTime.Now;
 
         public virtual User? User { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }

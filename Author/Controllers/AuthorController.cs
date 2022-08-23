@@ -78,10 +78,19 @@ namespace Author.Controllers
         /// <param name="book">The book.</param>
         /// <returns></returns>
         [HttpPut("EditBook")]
-        public ActionResult<string> EditBook([FromBody] Book book)
+        public IActionResult EditBook([FromBody] Book book)
         {
-            string result = _authorService.EditBook(book);
-            return result;
+            string result = string.Empty;
+            try
+            {
+                result = _authorService.EditBook(book);
+            }
+            catch (Exception ex)
+            {
+                result = $"Operation failed {ex.Message}";
+            }
+
+            return Ok(result.ToList());
         }
 
         /// <summary>
@@ -102,7 +111,7 @@ namespace Author.Controllers
         /// <param name="bookId">The book identifier.</param>
         /// <returns></returns>
         [HttpPost("DeleteBook")]
-        public IActionResult DeleteBook(long bookId)
+        public IActionResult DeleteBook(Book book)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             string result = string.Empty;
@@ -114,9 +123,9 @@ namespace Author.Controllers
 
                     if (claim.UserType == "Author")
                     {
-                        if (bookId != null)
+                        if (book.BookId != 0 )
                         {
-                            _authorService.DeleteBook(bookId);
+                            _authorService.DeleteBook(book.BookId);
                             result = "Book deleted sucessfully";
                         }
                         else
@@ -133,6 +142,25 @@ namespace Author.Controllers
             catch (Exception ex)
             {
                 result = $"Delete failed {ex.Message}";
+            }
+            return Ok(result.ToList());
+        }
+
+        [HttpGet("GetBookById")]
+        public IActionResult GetBookById(string bookId)
+        {
+            string result = string.Empty;
+            try
+            {
+                Book book = _authorService.GetBookById(Convert.ToInt32(bookId));
+                if (book != null)
+                    return Ok(book);
+                else
+                    result = "Book not found";
+            } 
+            catch (Exception ex)
+            {
+                result = ex.Message;
             }
             return Ok(result.ToList());
         }

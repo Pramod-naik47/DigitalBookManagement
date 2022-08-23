@@ -155,6 +155,24 @@
         "AuthenticationProviderKey": "GatewayAuthenticationKey",
         "AllowedScopes": []
       }
+    },
+    { //https://localhost:7151/api/v1/digitalbooks/author/getBookById
+      "DownstreamPathTemplate": "/api/Author/GetBookById",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "GET" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7036
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/author/getBookById",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationKey",
+        "AllowedScopes": []
+      }
     }
 
   ]

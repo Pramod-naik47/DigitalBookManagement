@@ -10,5 +10,6 @@ namespace Author.Repositories
         string EditBook(Book book);
         string LockOrUnlocBook(Book book);
         void DeleteBook(long bookId);
+        Book GetBookById(long bookId);
     }
 }

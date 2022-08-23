@@ -38,16 +38,17 @@ namespace TokenAuthentication.Controllers
                                         validate.UserName,
                                         validate.UserType,
                                         validate.UserId);
-                return Ok(new TokenModel
+                var token = new TokenModel
                 {
                     Token = result,
                     IsAuthenticated = true,
                     Message = "Validation sucessfull"
-                });
+                };
+                return Ok(token);
             }
             else
             {
-                return Ok(new TokenModel
+                return NotFound(new TokenModel
                 {
                     Token = result,
                     IsAuthenticated = false,
@@ -60,9 +61,9 @@ namespace TokenAuthentication.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim("UserName", userName),
-                new Claim("UserType", userType),
-                new Claim("UserId", userId.ToString()),
+                new Claim("userName", !string.IsNullOrWhiteSpace(userName) ? userName : string.Empty),
+                new Claim("userType",!string.IsNullOrWhiteSpace(userType) ? userType : string.Empty ),
+                new Claim("userId", !string.IsNullOrWhiteSpace(userId.ToString()) ? userId.ToString() : string.Empty),
             };
 
             claims.AddRange(audience.Select(aud => new Claim(JwtRegisteredClaimNames.Aud, aud)));

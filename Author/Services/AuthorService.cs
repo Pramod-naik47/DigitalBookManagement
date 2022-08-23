@@ -69,34 +69,30 @@ namespace Author.Services
         /// <returns>message whether the operation is scuccessfull or not</returns>
         public string EditBook(Book book)
         {
-            try
+            var result = _digitalBookManagementContext.Books.Where(x => x.BookId == book.BookId).FirstOrDefault();
+            string message = string.Empty;
+            if (result != null)
             {
-                var result = _digitalBookManagementContext.Books.Where(x => x.BookId == book.BookId).FirstOrDefault();
+                result.Publisher = book.Publisher;
+                result.BookTitle = book.BookTitle;
+                result.PublishDate = book.PublishDate;
+                result.ModifiedDate = DateTime.Now;
+                result.Category = book.Category;
+                result.Content = book.Content;
+                result.Active = book.Active;
+                result.Logo = book.Logo;
+                result.Price = book.Price;
+                result.User = book.User;
 
-                if (result != null)
-                {
-                    result.Publisher = book.Publisher;
-                    result.BookTitle = book.BookTitle;
-                    result.PublishDate = book.PublishDate;
-                    result.ModifiedDate = DateTime.Now;
-                    result.Category = book.Category;
-                    result.Content = book.Content;
-                    result.Active = book.Active;
-                    result.Logo = book.Logo;
-                    result.Price = book.Price;
-                    result.User = book.User;
-
-                    _digitalBookManagementContext.Books.Update(result);
-                    _digitalBookManagementContext.SaveChanges();
-
-                    return $"Book updated successfully";
-                }
-                return $"Input provided is not valid";
+                _digitalBookManagementContext.Books.Update(result);
+                _digitalBookManagementContext.SaveChanges();
+                message = "Book updated successfully";
             }
-            catch (Exception ex)
+            else 
             {
-                return $"Operation operation faild : {ex.Message}";
+                message = "Input provided is not valid";
             }
+            return message;
         }
         /// <summary>
         /// This method will lock or unlock the book
@@ -130,13 +126,18 @@ namespace Author.Services
 
         public void DeleteBook(long bookId)
         {
-            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId);
+            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
 
             if (book != null)
             {
-                _digitalBookManagementContext.Remove(book);
+                _digitalBookManagementContext.Books.Remove(book);
                 _digitalBookManagementContext.SaveChanges();
             }
+        }
+        public Book GetBookById(long bookId)
+        {
+            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
+            return book;
         }
     }
 }

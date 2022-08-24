@@ -1,9 +1,13 @@
-﻿namespace Reader.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Reader.Models
 {
     public partial class Book
     {
         public Book()
         {
+            Payments = new HashSet<Payment>();
         }
 
         public long BookId { get; set; }
@@ -20,5 +24,6 @@
         public DateTime? ModifiedDate { get; set; }
 
         public virtual User? User { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

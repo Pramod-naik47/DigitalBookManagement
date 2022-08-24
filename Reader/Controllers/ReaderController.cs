@@ -18,7 +18,25 @@ namespace Reader.Controllers
         public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
             var result = _readerService.SearchBook(bookTitle, category, author, price, publisher);
-            return Ok(result);
+            return Ok(result.ToList());
         }
+
+        [HttpPost("PurchaseBook")]
+        public IActionResult PurchaseBook([FromBody] Payment payment)
+        {
+            string result = string.Empty;
+            try
+            {
+                _readerService.PurchaseBook(payment);
+                result = "Payment sucessfull";
+            } 
+            catch(Exception ex)
+            {
+                result = ex.Message;
+            }
+            return Ok(result.ToList());
+        }
+
+
     }
 }

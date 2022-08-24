@@ -5,16 +5,16 @@ namespace Reader.Services
 {
     public class ReaderService : IReaderService
     {
-        public ReaderBookManagementContext _readerlBookManagementContext { get; set; }
-        public ReaderService(ReaderBookManagementContext readerBookManagementContext)
+        public DigitalBookManagementContext _digitalBookManagementContext { get; set; }
+        public ReaderService(DigitalBookManagementContext digitalBookManagementContext)
         {
-            _readerlBookManagementContext = readerBookManagementContext;
+            _digitalBookManagementContext = digitalBookManagementContext;
         }
 
         public IEnumerable<Book> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
-            IEnumerable<Book> books = new List<Book>();
-            var request = _readerlBookManagementContext.Books;
+            IEnumerable<Book>? books = null;
+            var request = _digitalBookManagementContext.Books.Where(b => b.Active == true);
 
             if (!string.IsNullOrWhiteSpace(bookTitle))
                 books = request.Where(x => x.BookTitle == bookTitle);
@@ -34,7 +34,24 @@ namespace Reader.Services
             //if (criteria.UserId != null)
             //    books = request.Where(x => x.UserId == criteria.UserId);
 
+            if (books == null)
+                books = request;
+
             return books.ToList();
         }
+
+        /// <summary>
+        /// Purchases the book.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        public void PurchaseBook(Payment payment)
+        {
+            if (payment != null)
+            {
+                _digitalBookManagementContext.Payments.Add(payment);
+                _digitalBookManagementContext.SaveChanges();
+            }
+        }
+
     }
 }

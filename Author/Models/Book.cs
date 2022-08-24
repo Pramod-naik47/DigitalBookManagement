@@ -1,4 +1,7 @@
-﻿namespace Author.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Author.Models
 {
     public partial class Book
     {

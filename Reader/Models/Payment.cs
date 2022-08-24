@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Author.Models
+namespace Reader.Models
 {
     public partial class Payment
     {

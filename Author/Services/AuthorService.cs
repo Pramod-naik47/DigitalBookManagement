@@ -16,18 +16,10 @@ namespace Author.Services
         /// </summary>
         /// <param name="book">Book</param>
         /// <returns>Result</returns>
-        public string CreateBook(Book book)
+        public void CreateBook(Book book)
         {
-            try
-            {
-                _digitalBookManagementContext.Books.Add(book);
-                _digitalBookManagementContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return $"Book save operation failed {ex.Message}";
-            }
-            return "Book saved suceessfully";
+            _digitalBookManagementContext.Books.Add(book);
+            _digitalBookManagementContext.SaveChanges();
         }
 
         /// <summary>

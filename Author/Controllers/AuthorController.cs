@@ -28,21 +28,29 @@ namespace Author.Controllers
         {
             string result = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            
-            if (identity != null)
+            try
             {
-                AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
-
-                if (claim.UserType == "Author")
+                if (identity != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(claim.UserId))
-                        book.UserId = Convert.ToUInt32(claim.UserId);
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
 
-                    result = _authorService.CreateBook(book);
+                    if (claim.UserType == "Author")
+                    {
+                        if (!string.IsNullOrWhiteSpace(claim.UserId))
+                            book.UserId = Convert.ToUInt32(claim.UserId);
+
+                        _authorService.CreateBook(book);
+                        result = "Book created sucessfully";
+                    }
+                    else
+                        return BadRequest();
                 }
-                else
-                    result = "User is not valid";
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
             return Ok(result.ToList());
         }
 

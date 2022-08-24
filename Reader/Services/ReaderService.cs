@@ -53,5 +53,11 @@ namespace Reader.Services
             }
         }
 
+        public Book GetBookById(long bookId)
+        {
+            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
+            return book;
+        }
+
     }
 }

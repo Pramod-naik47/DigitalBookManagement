@@ -37,6 +37,25 @@ namespace Reader.Controllers
             return Ok(result.ToList());
         }
 
+        [HttpGet("GetBookById")]
+        public IActionResult GetBookById(string bookId)
+        {
+            string result = string.Empty;
+            try
+            {
+                Book book = _readerService.GetBookById(Convert.ToInt32(bookId));
+                if (book != null)
+                    return Ok(book);
+                else
+                    result = "Book not found";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return Ok(result.ToList());
+        }
+
 
     }
 }

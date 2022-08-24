@@ -50,7 +50,7 @@ namespace Author.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
+
             return Ok(result.ToList());
         }
 
@@ -62,19 +62,19 @@ namespace Author.Controllers
         public IEnumerable<Book> GetAllBook()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            
+
             if (identity != null)
             {
                 AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
 
                 if (!string.IsNullOrWhiteSpace(claim.UserId))
-                    return  _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
+                    return _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
             }
             return null;
         }
 
         [HttpPost("AuthorLogin")]
-        public ActionResult<string> AuthorLogin([FromBody]User author)
+        public ActionResult<string> AuthorLogin([FromBody] User author)
         {
             string result = _authorService.AuthorLogin(author);
             return Ok(result);
@@ -131,7 +131,7 @@ namespace Author.Controllers
 
                     if (claim.UserType == "Author")
                     {
-                        if (book.BookId != 0 )
+                        if (book.BookId != 0)
                         {
                             _authorService.DeleteBook(book.BookId);
                             result = "Book deleted sucessfully";
@@ -146,7 +146,7 @@ namespace Author.Controllers
                         return BadRequest();
                     }
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 result = $"Delete failed {ex.Message}";
@@ -154,6 +154,7 @@ namespace Author.Controllers
             return Ok(result.ToList());
         }
 
+        
         [HttpGet("GetBookById")]
         public IActionResult GetBookById(string bookId)
         {

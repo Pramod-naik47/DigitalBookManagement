@@ -42,7 +42,7 @@ namespace TokenAuthentication.Controllers
                 {
                     Token = result,
                     IsAuthenticated = true,
-                    Message = "Validation sucessfull"
+                    Message = "Login sucessfull"
                 };
                 return Ok(token);
             }

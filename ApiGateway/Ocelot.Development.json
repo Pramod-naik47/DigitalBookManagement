@@ -15,7 +15,7 @@
       "UpstreamPathTemplate": "/api/v1/digitalbooks/books/search",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    { //Reader
+    {
       //https://localhost:7151/api/v1/digitalbooks/books/purchaseBook
       "DownstreamPathTemplate": "/api/Reader/PurchaseBook",
       "DownstreamScheme": "https",
@@ -30,7 +30,7 @@
       "UpstreamPathTemplate": "/api/v1/digitalbooks/books/purchaseBook",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    { //Reader
+    {
       //https://localhost:7151/api/v1/digitalbooks/books/getBookById
       "DownstreamPathTemplate": "/api/Reader/GetBookById",
       "DownstreamScheme": "https",
@@ -43,6 +43,21 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/digitalbooks/books/getBookById",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      //https://localhost:7151/api/v1/digitalbooks/books/getPaymentHistory
+      "DownstreamPathTemplate": "/api/Reader/GetPaymentHistory",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "GET" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7243
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/books/getPaymentHistory",
       "UpstreamHttpMethod": [ "GET" ]
     },
     { //Token authorntication

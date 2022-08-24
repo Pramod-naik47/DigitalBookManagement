@@ -53,11 +53,26 @@ namespace Reader.Services
             }
         }
 
+        /// <summary>
+        /// Gets the book by identifier.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>Books requested by user</returns>
         public Book GetBookById(long bookId)
         {
             var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
             return book;
         }
 
+        /// <summary>
+        /// Gets the payment history.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>all payment history of the user</returns>
+        public IEnumerable<Payment> GetPaymentHistory(string email)
+        {
+            var book = _digitalBookManagementContext.Payments.Where(b => b.Email == email);
+            return book;
+        }
     }
 }

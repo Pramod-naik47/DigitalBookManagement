@@ -56,6 +56,21 @@ namespace Reader.Controllers
             return Ok(result.ToList());
         }
 
+        [HttpGet("GetPaymentHistory")]
+        public IActionResult GetPaymentHistory(string email)
+        {
+            string result = string.Empty;
+            try
+            {
+                var payment =  _readerService.GetPaymentHistory(email);
+                return Ok(payment.ToList());
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
 
+            return Ok(result.ToList());
+        }
     }
 }

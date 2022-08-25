@@ -14,6 +14,15 @@ namespace Reader.Controllers
             _readerService = readerService;
         }
 
+        /// <summary>
+        /// Search the book by prvided input
+        /// </summary>
+        /// <param name="bookTitle">The book title.</param>
+        /// <param name="category">The category.</param>
+        /// <param name="author">The author.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="publisher">The publisher.</param>
+        /// <returns>List of books if any seach criteria meets</returns>
         [HttpGet("SearchForBook")]
         public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
@@ -21,6 +30,11 @@ namespace Reader.Controllers
             return Ok(result.ToList());
         }
 
+        /// <summary>
+        /// Take the payment object as parameter and save into db
+        /// </summary>
+        /// <param name="payment">Payment object</param>
+        /// <returns>Message</returns>
         [HttpPost("PurchaseBook")]
         public IActionResult PurchaseBook([FromBody] Payment payment)
         {
@@ -37,6 +51,11 @@ namespace Reader.Controllers
             return Ok(result.ToList());
         }
 
+        /// <summary>
+        /// Gets the book by id.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>Book</returns>
         [HttpGet("GetBookById")]
         public IActionResult GetBookById(string bookId)
         {
@@ -56,6 +75,11 @@ namespace Reader.Controllers
             return Ok(result.ToList());
         }
 
+        /// <summary>
+        /// Gets the payment history.
+        /// </summary>
+        /// <param name="email">The email provided by the user.</param>
+        /// <returns>Hostory of payment by the user</returns>
         [HttpGet("GetPaymentHistory")]
         public IActionResult GetPaymentHistory(string email)
         {
@@ -70,6 +94,29 @@ namespace Reader.Controllers
                 result = ex.Message;
             }
 
+            return Ok(result.ToList());
+        }
+        /// <summary>
+        /// Gets the book by book id
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>Book</returns>
+        [HttpGet("GetBookByIdForPayment")]
+        public IActionResult GetBookByIdForPayment(string bookId)
+        {
+            string result = string.Empty;
+            try
+            {
+                VBookPayment book = _readerService.GetBookByIdForPayment(Convert.ToInt32(bookId));
+                if (book != null)
+                    return Ok(book);
+                else
+                    result = "Book not found";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
             return Ok(result.ToList());
         }
     }

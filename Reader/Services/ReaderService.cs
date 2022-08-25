@@ -69,9 +69,16 @@ namespace Reader.Services
         /// </summary>
         /// <param name="email">The email.</param>
         /// <returns>all payment history of the user</returns>
-        public IEnumerable<Payment> GetPaymentHistory(string email)
+        public IEnumerable<VBookPayment> GetPaymentHistory(string email)
         {
-            var book = _digitalBookManagementContext.Payments.Where(b => b.Email == email);
+            var books = _digitalBookManagementContext.VBookPayments.Where(b => b.Email == email);
+            return books;
+        }
+
+        public VBookPayment GetBookByIdForPayment(long bookId)
+        {
+            
+            var book = _digitalBookManagementContext.VBookPayments.Where(b => b.BookId == bookId).FirstOrDefault();
             return book;
         }
     }

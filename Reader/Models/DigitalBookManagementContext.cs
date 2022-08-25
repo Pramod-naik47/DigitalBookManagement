@@ -19,6 +19,7 @@ namespace Reader.Models
         public virtual DbSet<Book> Books { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<VBookPayment> VBookPayments { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -142,6 +143,63 @@ namespace Reader.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("userType");
+            });
+
+            modelBuilder.Entity<VBookPayment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_BookPayment");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.BookId).HasColumnName("bookId");
+
+                entity.Property(e => e.BookTitle)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("bookTitle");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("category");
+
+                entity.Property(e => e.Content)
+                    .HasColumnType("ntext")
+                    .HasColumnName("content");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdDate");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modifiedDate");
+
+                entity.Property(e => e.PaymentDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("paymentDate");
+
+                entity.Property(e => e.PaymentId).HasColumnName("paymentId");
+
+                entity.Property(e => e.Price)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("price");
+
+                entity.Property(e => e.PublishDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("publishDate");
+
+                entity.Property(e => e.Publisher)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("publisher");
             });
 
             OnModelCreatingPartial(modelBuilder);

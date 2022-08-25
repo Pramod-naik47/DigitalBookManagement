@@ -46,6 +46,21 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      //https://localhost:7151/api/v1/digitalbooks/books/getBookByIdForPayment
+      "DownstreamPathTemplate": "/api/Reader/GetBookByIdForPayment",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "GET" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7243
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/books/getBookByIdForPayment",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       //https://localhost:7151/api/v1/digitalbooks/books/getPaymentHistory
       "DownstreamPathTemplate": "/api/Reader/GetPaymentHistory",
       "DownstreamScheme": "https",

@@ -24,37 +24,46 @@ namespace TokenAuthentication.Controllers
         public IActionResult Validate([FromBody]User user)
         {
             string result = string.Empty;
-            User validate = _authorTokenService.ValidateUser(user.UserName, user.Password);
-            if (validate != null)
+           
+            try
             {
-                result = BuildToken(_configuration["Jwt:Key"],
-                                        _configuration["Jwt:Issuer"],
-                                        new[]
-                                        {
+                User validate = _authorTokenService.ValidateUser(user.UserName, user.Password);
+                if (validate != null)
+                {
+                    result = BuildToken(_configuration["Jwt:Key"],
+                                            _configuration["Jwt:Issuer"],
+                                            new[]
+                                            {
                                             _configuration["Jwt:Aud1"],
                                             _configuration["Jwt:Aud2"],
                                             _configuration["Jwt:Aud3"]
-                                        },
-                                        validate.UserName,
-                                        validate.UserType,
-                                        validate.UserId);
-                var token = new TokenModel
+                                            },
+                                            validate.UserName,
+                                            validate.UserType,
+                                            validate.UserId);
+                    var token = new TokenModel
+                    {
+                        Token = result,
+                        IsAuthenticated = true,
+                        Message = "Login sucessfull"
+                    };
+                    return Ok(token);
+                }
+                else
                 {
-                    Token = result,
-                    IsAuthenticated = true,
-                    Message = "Login sucessfull"
-                };
-                return Ok(token);
+                    return NotFound(new TokenModel
+                    {
+                        Token = result,
+                        IsAuthenticated = false,
+                        Message = "Not a valid user"
+                    });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound(new TokenModel
-                {
-                    Token = result,
-                    IsAuthenticated = false,
-                    Message = "Not a valid user"
-                });
+                return Ok(ex.Message);
             }
+            
         }
 
         public string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)

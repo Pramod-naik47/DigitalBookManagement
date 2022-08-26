@@ -75,6 +75,21 @@
       "UpstreamPathTemplate": "/api/v1/digitalbooks/books/getPaymentHistory",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      //https://localhost:7151/api/v1/digitalbooks/books/getRefund
+      "DownstreamPathTemplate": "/api/Reader/GetRefund",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "DELETE" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7243
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/books/getRefund",
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
     { //Token authorntication
       //https://localhost:7151/api/v1/digitalbooks/genarateToken
       "DownstreamPathTemplate": "/TokenAuthentication",

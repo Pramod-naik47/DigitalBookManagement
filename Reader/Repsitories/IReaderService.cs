@@ -10,5 +10,7 @@ namespace Reader.Repsitories
         IEnumerable<VBookPayment> GetPaymentHistory(string email);
         VBookPayment GetBookByIdForPayment(long bookId);
 
+        void GetRefund(long paymentId);
+
     }
 }

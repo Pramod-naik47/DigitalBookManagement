@@ -119,5 +119,26 @@ namespace Reader.Controllers
             }
             return Ok(result.ToList());
         }
+
+        /// <summary>
+        /// Gets the refund.
+        /// </summary>
+        /// <param name="paymentId">The payment identifier.</param>
+        /// <returns>Message whether refund is provided or not</returns>
+        [HttpDelete("GetRefund")]
+        public IActionResult GetRefund(long paymentId)
+        {
+            string message = string.Empty;
+            try
+            {
+                _readerService.GetRefund(Convert.ToInt32(paymentId));
+                message = "Refund Successfull";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            return Ok(message.ToList());
+        }
     }
 }

@@ -81,5 +81,24 @@ namespace Reader.Services
             var book = _digitalBookManagementContext.VBookPayments.Where(b => b.BookId == bookId).FirstOrDefault();
             return book;
         }
+
+        /// <summary>
+        /// Take the payment Id as parameter and find the record and delete the record of payment.
+        /// </summary>
+        /// <param name="paymentId">The paymentId.</param>
+        public void GetRefund(long paymentId)
+        {
+            var payment = _digitalBookManagementContext.Payments.Where(b => b.PaymentId == paymentId).FirstOrDefault();
+
+            if (payment != null)
+            {
+                _digitalBookManagementContext.Payments.Remove(payment);
+                _digitalBookManagementContext.SaveChanges();
+            }
+        }
+
+
+
+
     }
 }

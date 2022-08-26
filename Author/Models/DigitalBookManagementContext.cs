@@ -200,6 +200,8 @@ namespace Author.Models
                     .IsUnicode(false)
                     .HasColumnName("publisher");
 
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
                 entity.Property(e => e.UserName)
                     .HasMaxLength(500)
                     .IsUnicode(false)

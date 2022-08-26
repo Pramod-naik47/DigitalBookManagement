@@ -18,6 +18,7 @@ namespace Author.Models
         public string UserName { get; set; } = null!;
         public string? UserType { get; set; }
         public string? Email { get; set; }
+        public long UserId { get; set; }
         public decimal? PhoneNumber { get; set; }
     }
 }

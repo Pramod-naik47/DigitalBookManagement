@@ -22,7 +22,7 @@ namespace Reader.Controllers
         /// <param name="author">The author.</param>
         /// <param name="price">The price.</param>
         /// <param name="publisher">The publisher.</param>
-        /// <returns>List of books if any seach criteria meets</returns>
+        /// <returns>List of books if any search criteria meets</returns>
         [HttpGet("SearchForBook")]
         public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {

@@ -11,10 +11,10 @@ namespace Reader.Services
             _digitalBookManagementContext = digitalBookManagementContext;
         }
 
-        public IEnumerable<Book> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
+        public IEnumerable<VBook2User> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
-            IEnumerable<Book>? books = null;
-            var request = _digitalBookManagementContext.Books.Where(b => b.Active == true);
+            IEnumerable<VBook2User>? books = null;
+            var request = _digitalBookManagementContext.VBook2Users.Where(b => b.Active == true);
 
             if (!string.IsNullOrWhiteSpace(bookTitle))
                 books = request.Where(x => x.BookTitle == bookTitle);
@@ -31,8 +31,8 @@ namespace Reader.Services
             //if (criteria.PublistDate != null)
             //    books = request.Where(x => x.PublishDate == criteria.PublistDate);
 
-            //if (criteria.UserId != null)
-            //    books = request.Where(x => x.UserId == criteria.UserId);
+            if (!string.IsNullOrWhiteSpace(author))
+                books = request.Where(x => x.UserName == author);
 
             if (books == null)
                 books = request;

@@ -5,7 +5,7 @@ namespace Author.Repositories
     public interface IAuthorService
     {
         void CreateBook(Book book);
-        IEnumerable<Book> GetAllBooks(long userId);
+        IEnumerable<VBook2User> GetAllBooks(long userId);
         string AuthorLogin(User user);
         string EditBook(Book book);
         string LockOrUnlocBook(Book book);

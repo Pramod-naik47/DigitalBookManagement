@@ -216,7 +216,7 @@
     { //https://localhost:7151/api/v1/digitalbooks/author/deleteBook
       "DownstreamPathTemplate": "/api/Author/DeleteBook",
       "DownstreamScheme": "https",
-      "DownstreamHttpMenthod": [ "POST" ],
+      "DownstreamHttpMenthod": [ "DELETE" ],
       "RouteIsCaseSensitive": false,
       "DownstreamHostAndPorts": [
         {
@@ -225,7 +225,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/digitalbooks/author/deleteBook",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": [ "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationKey",
         "AllowedScopes": []

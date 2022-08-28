@@ -59,18 +59,38 @@ namespace Author.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllBooks")]
-        public IEnumerable<Book> GetAllBook()
+        public IActionResult GetAllBook()
         {
+            string message = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-
-            if (identity != null)
+            try
             {
-                AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
-
-                if (!string.IsNullOrWhiteSpace(claim.UserId))
-                    return _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+                    if (claim.UserType == "Author")
+                    {
+                        if (!string.IsNullOrWhiteSpace(claim.UserId))
+                        {
+                            var result = _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
+                            if (result != null)
+                                return Ok(result.ToList());
+                            else
+                                message = "No book found";
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
             }
-            return null;
+            catch(Exception ex)
+            {
+                message = ex.Message;
+            }
+            
+            return Ok(message.ToList());
         }
 
         [HttpPost("AuthorLogin")]
@@ -89,9 +109,21 @@ namespace Author.Controllers
         public IActionResult EditBook([FromBody] Book book)
         {
             string result = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                result = _authorService.EditBook(book);
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+                    if (claim.UserType == "Author")
+                    {
+                        result = _authorService.EditBook(book);
+                    }
+                }
+                else
+                {
+                    BadRequest();
+                }      
             }
             catch (Exception ex)
             {
@@ -118,8 +150,8 @@ namespace Author.Controllers
         /// </summary>
         /// <param name="bookId">The book identifier.</param>
         /// <returns></returns>
-        [HttpPost("DeleteBook")]
-        public IActionResult DeleteBook(Book book)
+        [HttpDelete("DeleteBook")]
+        public IActionResult DeleteBook(long bookId)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             string result = string.Empty;
@@ -131,9 +163,9 @@ namespace Author.Controllers
 
                     if (claim.UserType == "Author")
                     {
-                        if (book.BookId != 0)
+                        if (bookId != 0)
                         {
-                            _authorService.DeleteBook(book.BookId);
+                            _authorService.DeleteBook(bookId);
                             result = "Book deleted sucessfully";
                         }
                         else
@@ -159,14 +191,27 @@ namespace Author.Controllers
         public IActionResult GetBookById(string bookId)
         {
             string result = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                Book book = _authorService.GetBookById(Convert.ToInt32(bookId));
-                if (book != null)
-                    return Ok(book);
-                else
-                    result = "Book not found";
-            } 
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+
+                    if (claim.UserType == "Author")
+                    {
+                        Book book = _authorService.GetBookById(Convert.ToInt32(bookId));
+                        if (book != null)
+                            return Ok(book);
+                        else
+                            result = "Book not found";
+                    } 
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+            }
             catch (Exception ex)
             {
                 result = ex.Message;

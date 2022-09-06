@@ -20,6 +20,11 @@ namespace TokenAuthentication.Controllers
             this._configuration = configuration;
         }
 
+        /// <summary>
+        /// Validates the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>object</returns>
         [HttpPost]
         public IActionResult Validate([FromBody]User user)
         {
@@ -66,7 +71,7 @@ namespace TokenAuthentication.Controllers
             
         }
 
-        public string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)
+        private string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)
         {
             var claims = new List<Claim>
             {

@@ -96,11 +96,6 @@ namespace Author.Models
 
                 entity.Property(e => e.BookId).HasColumnName("bookId");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
                     .HasColumnName("modifiedDate");
@@ -109,10 +104,17 @@ namespace Author.Models
                     .HasColumnType("datetime")
                     .HasColumnName("paymentDate");
 
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.BookId)
                     .HasConstraintName("FK__payment__bookId__36B12243");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__payment__userId__5AEE82B9");
             });
 
             modelBuilder.Entity<User>(entity =>

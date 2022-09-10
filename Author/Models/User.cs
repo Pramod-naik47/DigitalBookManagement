@@ -8,6 +8,7 @@ namespace Author.Models
         public User()
         {
             Books = new HashSet<Book>();
+            Payments = new HashSet<Payment>();
         }
 
         public long UserId { get; set; }
@@ -18,5 +19,6 @@ namespace Author.Models
         public decimal? PhoneNumber { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

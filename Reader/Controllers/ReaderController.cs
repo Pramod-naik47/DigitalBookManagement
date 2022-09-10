@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Reader.Models;
 using Reader.Repsitories;
+using System.Text;
 
 namespace Reader.Controllers
 {
@@ -36,19 +37,26 @@ namespace Reader.Controllers
         /// <param name="payment">Payment object</param>
         /// <returns>Message</returns>
         [HttpPost("PurchaseBook")]
-        public IActionResult PurchaseBook([FromBody] Payment payment)
+        public async Task<IActionResult> PurchaseBookAsync([FromBody] Payment payment)
         {
-            string result = string.Empty;
+            string message = string.Empty;
             try
             {
-                _readerService.PurchaseBook(payment);
-                result = "Payment sucessfull";
-            } 
-            catch(Exception ex)
-            {
-                result = ex.Message;
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(payment);
+                var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.PostAsJsonAsync("http://localhost:7071/api/PurchaseBook", json);
+                    return Ok(response);
+                }
             }
-            return Ok(result.ToList());
+
+            catch (Exception exp)
+            {
+                message = exp.Message;
+            }
+
+            return Ok(message.ToList());
         }
 
         /// <summary>

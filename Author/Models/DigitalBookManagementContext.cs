@@ -244,7 +244,7 @@ namespace Author.Models
                     .HasColumnName("createdDate");
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(250)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("email");
 
@@ -258,6 +258,10 @@ namespace Author.Models
 
                 entity.Property(e => e.PaymentId).HasColumnName("paymentId");
 
+                entity.Property(e => e.PhoneNumber)
+                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnName("phoneNumber");
+
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(18, 0)")
                     .HasColumnName("price");
@@ -270,6 +274,13 @@ namespace Author.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("publisher");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("userName");
             });
 
             OnModelCreatingPartial(modelBuilder);

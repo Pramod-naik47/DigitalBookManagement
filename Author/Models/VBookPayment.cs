@@ -15,8 +15,11 @@ namespace Author.Models
         public DateTime? ModifiedDate { get; set; }
         public DateTime? PublishDate { get; set; }
         public string? Publisher { get; set; }
+        public long? UserId { get; set; }
         public long PaymentId { get; set; }
-        public string? Email { get; set; }
         public DateTime? PaymentDate { get; set; }
+        public string? Email { get; set; }
+        public string UserName { get; set; } = null!;
+        public decimal? PhoneNumber { get; set; }
     }
 }

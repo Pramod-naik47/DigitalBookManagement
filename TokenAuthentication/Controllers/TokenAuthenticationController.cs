@@ -25,14 +25,14 @@ namespace TokenAuthentication.Controllers
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns>object</returns>
-        [HttpPost]
+        [HttpPost("ValidateUser")]
         public IActionResult Validate([FromBody]User user)
         {
             string result = string.Empty;
            
             try
             {
-                User validate = _authorTokenService.ValidateUser(user.UserName, user.Password);
+                User validate = _authorTokenService.ValidateUser(user.UserName, user.Password, user.UserType);
                 if (validate != null)
                 {
                     result = BuildToken(_configuration["Jwt:Key"],
@@ -50,17 +50,19 @@ namespace TokenAuthentication.Controllers
                     {
                         Token = result,
                         IsAuthenticated = true,
-                        Message = "Login sucessfull"
+                        Message = "Login sucessfull",
+                        StatusCode = 1
                     };
                     return Ok(token);
                 }
                 else
                 {
-                    return NotFound(new TokenModel
+                    return Ok(new TokenModel
                     {
                         Token = result,
                         IsAuthenticated = false,
-                        Message = "Not a valid user"
+                        Message = "Not a valid user",
+                        StatusCode = 0
                     });
                 }
             }
@@ -68,7 +70,36 @@ namespace TokenAuthentication.Controllers
             {
                 return Ok(ex.Message);
             }
-            
+        }
+
+        [HttpPost("CheckExistingUser")]
+        public IActionResult CheckExistingUser([FromBody] User user)
+        {
+            try
+            {
+                User result = _authorTokenService.CheckExistingUser(user.UserName, user.UserType);
+
+                if (result != null)
+                {
+                    return Ok(new TokenModel
+                    {
+                        Message = "User already exist",
+                        StatusCode = 0
+                    });
+                } 
+                else
+                {
+                    return Ok(new TokenModel
+                    {
+                        StatusCode = 1
+                    });
+                }
+                    
+            }
+            catch(Exception ex)
+            {
+                    return BadRequest(ex.Message);
+            }
         }
 
         private string BuildToken(string key, string issuer, IEnumerable<string> audience, string userName, string userType, long userId)

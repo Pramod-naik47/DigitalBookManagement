@@ -243,11 +243,6 @@ namespace Reader.Models
                     .HasColumnType("datetime")
                     .HasColumnName("createdDate");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
                     .HasColumnName("modifiedDate");
@@ -270,6 +265,8 @@ namespace Reader.Models
                     .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("publisher");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
             });
 
             OnModelCreatingPartial(modelBuilder);

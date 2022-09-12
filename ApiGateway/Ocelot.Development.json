@@ -92,7 +92,7 @@
     },
     { //Token authorntication
       //https://localhost:7151/api/v1/digitalbooks/genarateToken
-      "DownstreamPathTemplate": "/TokenAuthentication",
+      "DownstreamPathTemplate": "/TokenAuthentication/ValidateUser",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "POST" ],
       "RouteIsCaseSensitive": false,
@@ -103,6 +103,20 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/digitalbooks/genarateToken",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    { //https://localhost:7151/api/v1/digitalbooks/checkExistingUser
+      "DownstreamPathTemplate": "/TokenAuthentication/CheckExistingUser",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMenthod": [ "POST" ],
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7286
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/digitalbooks/checkExistingUser",
       "UpstreamHttpMethod": [ "POST" ]
     },
     { //Author
@@ -196,7 +210,7 @@
     },
     {
       //https://localhost:7151/api/v1/digitalbooks/author/LockOrUnlock
-      "DownstreamPathTemplate": "/api/v1/digitalbooks/author/LockOrUnlocBook",
+      "DownstreamPathTemplate": "/api/Author/LockOrUnlockBook",
       "DownstreamScheme": "https",
       "DownstreamHttpMenthod": [ "PUT" ],
       "RouteIsCaseSensitive": false,

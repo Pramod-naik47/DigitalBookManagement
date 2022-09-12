@@ -138,7 +138,7 @@ namespace Author.Controllers
         /// </summary>
         /// <param name="book">The book.</param>
         /// <returns></returns>
-        [HttpPut("LockOrUnlocBook")]
+        [HttpPut("LockOrUnlockBook")]
         public ActionResult<string> LockOrUnlocBook([FromBody] Book book)
         {
             string result = _authorService.LockOrUnlocBook(book);

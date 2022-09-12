@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Reader.ApplicationEnumns;
 using Reader.Models;
 using Reader.Repsitories;
+using System.Security.Claims;
 using System.Text;
 
 namespace Reader.Controllers
 {
     [ApiController]
     [Route("api/Reader")]
+    [Authorize]
     public class ReaderController : ControllerBase
     {
         private readonly IReaderService _readerService;
@@ -40,15 +44,29 @@ namespace Reader.Controllers
         public async Task<IActionResult> PurchaseBookAsync([FromBody] Payment payment)
         {
             string message = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(payment);
-                var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
-                using (HttpClient client = new HttpClient())
+                if (identity != null)
                 {
-                    var response = await client.PostAsJsonAsync("http://localhost:7071/api/PurchaseBook", json);
-                    return Ok(response);
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+                    if (!string.IsNullOrWhiteSpace(claim.UserId) && claim.UserType == UserType.Reader.ToString())
+                    {
+                        payment.UserId = Convert.ToInt64(claim.UserId);
+                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(payment);
+                        var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+                        using (HttpClient client = new HttpClient())
+                        {
+                            var response = await client.PostAsJsonAsync("http://localhost:7071/api/PurchaseBook", json);
+                            return Ok(response);
+                        }
+                    } 
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
+                
             }
 
             catch (Exception exp)
@@ -89,13 +107,33 @@ namespace Reader.Controllers
         /// <param name="email">The email provided by the user.</param>
         /// <returns>Hostory of payment by the user</returns>
         [HttpGet("GetPaymentHistory")]
-        public IActionResult GetPaymentHistory(string email)
+        public IActionResult GetPaymentHistory()
         {
             string result = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                var payment =  _readerService.GetPaymentHistory(email);
-                return Ok(payment.ToList());
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+                    if (claim != null && claim.UserType == UserType.Reader.ToString())
+                    {
+                        if (!string.IsNullOrWhiteSpace(claim.UserId))
+                        {
+                            var payment = _readerService.GetPaymentHistory(Convert.ToInt64(claim.UserId));
+                            return Ok(payment.ToList());
+                        }
+                        else
+                        {
+                            return BadRequest();
+                        }
+                    } 
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                
             }
             catch (Exception ex)
             {

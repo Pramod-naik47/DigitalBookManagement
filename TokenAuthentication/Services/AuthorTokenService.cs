@@ -10,11 +10,20 @@ namespace TokenAuthentication.Services
             _tokenAuthenticationDbContext = tokenAuthenticationDbContext;
         }
 
-        public User ValidateUser(string userName, string password)
+        public User ValidateUser(string userName, string password, string userType)
         {
-            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.Password == password).FirstOrDefault();
+            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.Password == password && x.UserType == userType).FirstOrDefault();
 
             return result;
         }
+
+        public User CheckExistingUser(string userName, string userType)
+        {
+            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.UserType == userType).FirstOrDefault();
+
+            return result;
+        }
+
+
     }
 }

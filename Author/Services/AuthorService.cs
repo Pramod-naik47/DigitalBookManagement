@@ -125,9 +125,8 @@ namespace Author.Services
         public IEnumerable<VBook2User> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher,long userId)
         {
             IEnumerable<VBook2User>? books = null;
-            var request = _digitalBookManagementContext.VBook2Users.Where(b => b.Active == true);
+            var request = _digitalBookManagementContext.VBook2Users.Where(x => x.UserId == userId);
 
-            books = request.Where(x => x.UserId == userId);
 
             if (!string.IsNullOrWhiteSpace(bookTitle))
                 books = request.Where(x => x.BookTitle == bookTitle);
@@ -143,6 +142,9 @@ namespace Author.Services
 
             if (!string.IsNullOrWhiteSpace(author))
                 books = request.Where(x => x.UserName == author);
+
+            if (books == null)
+                books = request;
 
             return books.ToList();
         }

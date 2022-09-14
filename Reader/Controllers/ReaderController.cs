@@ -29,7 +29,7 @@ namespace Reader.Controllers
         /// <param name="publisher">The publisher.</param>
         /// <returns>List of books if any search criteria meets</returns>
         [HttpGet("SearchForBook")]
-        public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
+        public async Task<IActionResult> SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
             string message = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -41,7 +41,7 @@ namespace Reader.Controllers
 
                     if (claim.UserType == UserType.Reader.ToString())
                     {
-                        var result = _readerService.SearchBook(bookTitle, category, author, price, publisher);
+                        var result = await _readerService.SearchBook(bookTitle, category, author, price, publisher);
                         return Ok(result.ToList());
                     }
                     else
@@ -105,12 +105,12 @@ namespace Reader.Controllers
         /// <param name="bookId">The book identifier.</param>
         /// <returns>Book</returns>
         [HttpGet("GetBookById")]
-        public IActionResult GetBookById(string bookId)
+        public async Task<IActionResult> GetBookById(string bookId)
         {
             string result = string.Empty;
             try
             {
-                Book book = _readerService.GetBookById(Convert.ToInt32(bookId));
+                Book book = await _readerService.GetBookById(Convert.ToInt32(bookId));
                 if (book != null)
                     return Ok(book);
                 else
@@ -129,7 +129,7 @@ namespace Reader.Controllers
         /// <param name="email">The email provided by the user.</param>
         /// <returns>Hostory of payment by the user</returns>
         [HttpGet("GetPaymentHistory")]
-        public IActionResult GetPaymentHistory()
+        public async Task<IActionResult> GetPaymentHistory()
         {
             string result = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -142,7 +142,7 @@ namespace Reader.Controllers
                     {
                         if (!string.IsNullOrWhiteSpace(claim.UserId))
                         {
-                            var payment = _readerService.GetPaymentHistory(Convert.ToInt64(claim.UserId));
+                            var payment = await _readerService.GetPaymentHistory(Convert.ToInt64(claim.UserId));
                             return Ok(payment.ToList());
                         }
                         else
@@ -170,12 +170,12 @@ namespace Reader.Controllers
         /// <param name="bookId">The book identifier.</param>
         /// <returns>Book</returns>
         [HttpGet("GetBookByIdForPayment")]
-        public IActionResult GetBookByIdForPayment(string bookId)
+        public async Task<IActionResult> GetBookByIdForPayment(string bookId)
         {
             string result = string.Empty;
             try
             {
-                VBookPayment book = _readerService.GetBookByIdForPayment(Convert.ToInt32(bookId));
+                VBookPayment book = await _readerService.GetBookByIdForPayment(Convert.ToInt32(bookId));
                 if (book != null)
                     return Ok(book);
                 else
@@ -194,12 +194,12 @@ namespace Reader.Controllers
         /// <param name="paymentId">The payment identifier.</param>
         /// <returns>Message whether refund is provided or not</returns>
         [HttpDelete("GetRefund")]
-        public IActionResult GetRefund(long paymentId)
+        public async Task<IActionResult> GetRefund(long paymentId)
         {
             string message = string.Empty;
             try
             {
-                _readerService.GetRefund(Convert.ToInt32(paymentId));
+                await _readerService.GetRefund(Convert.ToInt32(paymentId));
                 message = "Refund Successfull";
             }
             catch (Exception ex)

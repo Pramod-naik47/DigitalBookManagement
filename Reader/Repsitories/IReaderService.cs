@@ -4,13 +4,13 @@ namespace Reader.Repsitories
 {
     public interface IReaderService
     {
-        IEnumerable<VBook2User> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher);
+        Task<IEnumerable<VBook2User>> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher);
         void PurchaseBook(Payment payment);
-        Book GetBookById(long bookId);
-        IEnumerable<VBookPayment> GetPaymentHistory(long userId);
-        VBookPayment GetBookByIdForPayment(long bookId);
+        Task<Book> GetBookById(long bookId);
+        Task<IEnumerable<VBookPayment>> GetPaymentHistory(long userId);
+        Task<VBookPayment> GetBookByIdForPayment(long bookId);
 
-        void GetRefund(long paymentId);
+        Task GetRefund(long paymentId);
 
     }
 }

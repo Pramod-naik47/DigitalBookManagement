@@ -1,4 +1,5 @@
-﻿using Reader.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Reader.Models;
 using Reader.Repsitories;
 
 namespace Reader.Services
@@ -11,10 +12,10 @@ namespace Reader.Services
             _digitalBookManagementContext = digitalBookManagementContext;
         }
 
-        public IEnumerable<VBook2User> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
+        public async  Task<IEnumerable<VBook2User>> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
             IEnumerable<VBook2User>? books = null;
-            var request = _digitalBookManagementContext.VBook2Users.Where(b => b.Active == true);
+            var request = await _digitalBookManagementContext.VBook2Users.Where(b => b.Active == true).ToListAsync();
 
             if (!string.IsNullOrWhiteSpace(bookTitle))
                 books = request.Where(x => x.BookTitle == bookTitle);
@@ -28,16 +29,13 @@ namespace Reader.Services
             if (price != null && price != 0)
                 books = request.Where(x => x.Price == price);
 
-            //if (criteria.PublistDate != null)
-            //    books = request.Where(x => x.PublishDate == criteria.PublistDate);
-
             if (!string.IsNullOrWhiteSpace(author))
                 books = request.Where(x => x.UserName == author);
 
             if (books == null)
                 books = request;
 
-            return books.ToList();
+            return  books;
         }
 
         /// <summary>
@@ -58,10 +56,10 @@ namespace Reader.Services
         /// </summary>
         /// <param name="bookId">The book identifier.</param>
         /// <returns>Books requested by user</returns>
-        public Book GetBookById(long bookId)
+        public async Task<Book> GetBookById(long bookId)
         {
-            var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
-            return book;
+            var book = await _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).ToListAsync();
+            return book.FirstOrDefault();
         }
 
         /// <summary>
@@ -69,36 +67,32 @@ namespace Reader.Services
         /// </summary>
         /// <param name="email">The email.</param>
         /// <returns>all payment history of the user</returns>
-        public IEnumerable<VBookPayment> GetPaymentHistory(long userId)
+        public async Task<IEnumerable<VBookPayment>> GetPaymentHistory(long userId)
         {
-            var books = _digitalBookManagementContext.VBookPayments.Where(b => b.UserId == userId);
+            var books = await _digitalBookManagementContext.VBookPayments.Where(b => b.UserId == userId).ToListAsync();
             return books;
         }
 
-        public VBookPayment GetBookByIdForPayment(long bookId)
+        public async Task<VBookPayment> GetBookByIdForPayment(long bookId)
         {
             
-            var book = _digitalBookManagementContext.VBookPayments.Where(b => b.BookId == bookId).FirstOrDefault();
-            return book;
+            var book = await _digitalBookManagementContext.VBookPayments.Where(b => b.BookId == bookId).ToListAsync();
+            return book.FirstOrDefault();
         }
 
         /// <summary>
         /// Take the payment Id as parameter and find the record and delete the record of payment.
         /// </summary>
         /// <param name="paymentId">The paymentId.</param>
-        public void GetRefund(long paymentId)
+        public async Task GetRefund(long paymentId)
         {
             var payment = _digitalBookManagementContext.Payments.Where(b => b.PaymentId == paymentId).FirstOrDefault();
 
             if (payment != null)
             {
                 _digitalBookManagementContext.Payments.Remove(payment);
-                _digitalBookManagementContext.SaveChanges();
+                await _digitalBookManagementContext.SaveChangesAsync();
             }
         }
-
-
-
-
     }
 }

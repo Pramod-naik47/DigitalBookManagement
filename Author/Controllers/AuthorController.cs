@@ -25,7 +25,7 @@ namespace Author.Controllers
         /// <param name="book">The book.</param>
         /// <returns></returns>
         [HttpPost("CreateBook")]
-        public IActionResult CreateBook([FromBody] Book book)
+        public async Task<IActionResult> CreateBook([FromBody] Book book)
         {
             string result = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -40,7 +40,7 @@ namespace Author.Controllers
                         if (!string.IsNullOrWhiteSpace(claim.UserId))
                             book.UserId = Convert.ToUInt32(claim.UserId);
 
-                        _authorService.CreateBook(book);
+                         await _authorService.CreateBook(book);
                         result = "Book created sucessfully";
                     }
                     else
@@ -55,20 +55,13 @@ namespace Author.Controllers
             return Ok(result.ToList());
         }
 
-        [HttpPost("AuthorLogin")]
-        public ActionResult<string> AuthorLogin([FromBody] User author)
-        {
-            string result = _authorService.AuthorLogin(author);
-            return Ok(result);
-        }
-
         /// <summary>
         /// Edits the book.
         /// </summary>
         /// <param name="book">The book.</param>
         /// <returns></returns>
         [HttpPut("EditBook")]
-        public IActionResult EditBook([FromBody] Book book)
+        public async Task<IActionResult> EditBook([FromBody] Book book)
         {
             string result = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -79,7 +72,7 @@ namespace Author.Controllers
                     AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
                     if (claim.UserType == "Author")
                     {
-                        result = _authorService.EditBook(book);
+                        result = await _authorService.EditBook(book);
                     }
                 }
                 else
@@ -101,10 +94,10 @@ namespace Author.Controllers
         /// <param name="book">The book.</param>
         /// <returns></returns>
         [HttpPut("LockOrUnlockBook")]
-        public ActionResult<string> LockOrUnlocBook([FromBody] Book book)
+        public async Task<IActionResult> LockOrUnlocBook([FromBody] Book book)
         {
-            string result = _authorService.LockOrUnlocBook(book);
-            return result;
+            string result = await _authorService.LockOrUnlocBook(book);
+            return Ok(result.ToList());
         }
 
         /// <summary>
@@ -113,7 +106,7 @@ namespace Author.Controllers
         /// <param name="bookId">The book identifier.</param>
         /// <returns></returns>
         [HttpDelete("DeleteBook")]
-        public IActionResult DeleteBook(long bookId)
+        public async Task<IActionResult> DeleteBook(long bookId)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             string result = string.Empty;
@@ -127,7 +120,7 @@ namespace Author.Controllers
                     {
                         if (bookId != 0)
                         {
-                            _authorService.DeleteBook(bookId);
+                            await _authorService.DeleteBook(bookId);
                             result = "Book deleted sucessfully";
                         }
                         else
@@ -150,7 +143,7 @@ namespace Author.Controllers
 
         
         [HttpGet("GetBookById")]
-        public IActionResult GetBookById(string bookId)
+        public async Task<IActionResult> GetBookById(string bookId)
         {
             string result = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -162,7 +155,7 @@ namespace Author.Controllers
 
                     if (claim.UserType == "Author")
                     {
-                        Book book = _authorService.GetBookById(Convert.ToInt32(bookId));
+                        Book book = await _authorService.GetBookById(Convert.ToInt32(bookId));
                         if (book != null)
                             return Ok(book);
                         else
@@ -191,7 +184,7 @@ namespace Author.Controllers
         /// <param name="publisher">The publisher.</param>
         /// <returns>List of books if any search criteria meets</returns>
         [HttpGet("GetAllBooks")]
-        public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
+        public async Task<IActionResult> SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
             string message = string.Empty;
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -203,7 +196,7 @@ namespace Author.Controllers
 
                     if (claim.UserType == UserType.Author.ToString() && !string.IsNullOrWhiteSpace(claim.UserId))
                     {
-                        var result = _authorService.SearchBook(bookTitle, category, author, price, publisher,Convert.ToInt64(claim.UserId));
+                        var result = await _authorService.SearchBook(bookTitle, category, author, price, publisher,Convert.ToInt64(claim.UserId));
                         return Ok(result.ToList());
                     }
                     else

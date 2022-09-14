@@ -1,4 +1,4 @@
-﻿namespace Reader.ApplicationEnumns
+﻿namespace Author.ApplicationEnums
 {
     public enum UserType
     {

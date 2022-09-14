@@ -23,16 +23,6 @@ namespace Author.Services
         }
 
         /// <summary>
-        /// This method will get the all the books created by logged in author
-        /// </summary>
-        /// <returns>Book list</returns>
-        public IEnumerable<VBook2User> GetAllBooks(long userId)
-        {
-            var request = _digitalBookManagementContext.VBook2Users.Where(x => x.UserId == userId);
-            return request;
-        }
-
-        /// <summary>
         /// This method will take user name and password validate the user
         /// </summary>
         /// <param name="author"></param>
@@ -130,6 +120,31 @@ namespace Author.Services
         {
             var book = _digitalBookManagementContext.Books.Where(b => b.BookId == bookId).FirstOrDefault();
             return book;
+        }
+
+        public IEnumerable<VBook2User> SearchBook(string? bookTitle, string? category, string? author, decimal? price, string? publisher,long userId)
+        {
+            IEnumerable<VBook2User>? books = null;
+            var request = _digitalBookManagementContext.VBook2Users.Where(b => b.Active == true);
+
+            books = request.Where(x => x.UserId == userId);
+
+            if (!string.IsNullOrWhiteSpace(bookTitle))
+                books = request.Where(x => x.BookTitle == bookTitle);
+
+            if (!string.IsNullOrWhiteSpace(publisher))
+                books = request.Where(x => x.Publisher == publisher);
+
+            if (!string.IsNullOrWhiteSpace(category))
+                books = request.Where(x => x.Category == category);
+
+            if (price != null && price != 0)
+                books = request.Where(x => x.Price == price);
+
+            if (!string.IsNullOrWhiteSpace(author))
+                books = request.Where(x => x.UserName == author);
+
+            return books.ToList();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Author.CommonResources;
+﻿using Author.ApplicationEnums;
+using Author.CommonResources;
 using Author.Models;
 using Author.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -52,45 +53,6 @@ namespace Author.Controllers
             }
 
             return Ok(result.ToList());
-        }
-
-        /// <summary>
-        /// Gets all book.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetAllBooks")]
-        public IActionResult GetAllBook()
-        {
-            string message = string.Empty;
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            try
-            {
-                if (identity != null)
-                {
-                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
-                    if (claim.UserType == "Author")
-                    {
-                        if (!string.IsNullOrWhiteSpace(claim.UserId))
-                        {
-                            var result = _authorService.GetAllBooks(Convert.ToInt64(claim.UserId));
-                            if (result != null)
-                                return Ok(result.ToList());
-                            else
-                                message = "No book found";
-                        }
-                    }
-                    else
-                    {
-                        return BadRequest();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                message = ex.Message;
-            }
-            
-            return Ok(message.ToList());
         }
 
         [HttpPost("AuthorLogin")]
@@ -217,6 +179,44 @@ namespace Author.Controllers
                 result = ex.Message;
             }
             return Ok(result.ToList());
+        }
+
+        /// <summary>
+        /// Search the book by prvided input
+        /// </summary>
+        /// <param name="bookTitle">The book title.</param>
+        /// <param name="category">The category.</param>
+        /// <param name="author">The author.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="publisher">The publisher.</param>
+        /// <returns>List of books if any search criteria meets</returns>
+        [HttpGet("GetAllBooks")]
+        public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
+        {
+            string message = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            try
+            {
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+
+                    if (claim.UserType == UserType.Author.ToString() && !string.IsNullOrWhiteSpace(claim.UserId))
+                    {
+                        var result = _authorService.SearchBook(bookTitle, category, author, price, publisher,Convert.ToInt64(claim.UserId));
+                        return Ok(result.ToList());
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            return Ok(message.ToList());
         }
     }
 }

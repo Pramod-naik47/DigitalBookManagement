@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Reader.ApplicationEnumns;
+using Reader.ApplicationEnums;
 using Reader.Models;
 using Reader.Repsitories;
 using System.Security.Claims;
@@ -31,8 +31,30 @@ namespace Reader.Controllers
         [HttpGet("SearchForBook")]
         public IActionResult SearchBooks(string? bookTitle, string? category, string? author, decimal? price, string? publisher)
         {
-            var result = _readerService.SearchBook(bookTitle, category, author, price, publisher);
-            return Ok(result.ToList());
+            string message = string.Empty;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            try
+            {
+                if (identity != null)
+                {
+                    AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
+
+                    if (claim.UserType == UserType.Reader.ToString())
+                    {
+                        var result = _readerService.SearchBook(bookTitle, category, author, price, publisher);
+                        return Ok(result.ToList());
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+            } 
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            return Ok(message.ToList());
         }
 
         /// <summary>

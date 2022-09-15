@@ -42,7 +42,10 @@ namespace Reader.Controllers
                     if (claim.UserType == UserType.Reader.ToString())
                     {
                         var result = await _readerService.SearchBook(bookTitle, category, author, price, publisher);
-                        return Ok(result.ToList());
+                        if (result.Count() ==0)
+                            return NoContent();
+                        else
+                            return Ok(result.ToList());
                     }
                     else
                     {
@@ -114,7 +117,7 @@ namespace Reader.Controllers
                 if (book != null)
                     return Ok(book);
                 else
-                    result = "Book not found";
+                    return NoContent();
             }
             catch (Exception ex)
             {
@@ -143,7 +146,10 @@ namespace Reader.Controllers
                         if (!string.IsNullOrWhiteSpace(claim.UserId))
                         {
                             var payment = await _readerService.GetPaymentHistory(Convert.ToInt64(claim.UserId));
-                            return Ok(payment.ToList());
+                            if (payment.Count() == 0)
+                                return NoContent();
+                            else
+                                return Ok(payment.ToList());
                         }
                         else
                         {
@@ -179,7 +185,7 @@ namespace Reader.Controllers
                 if (book != null)
                     return Ok(book);
                 else
-                    result = "Book not found";
+                    return NoContent();
             }
             catch (Exception ex)
             {

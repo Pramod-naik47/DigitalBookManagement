@@ -72,7 +72,8 @@ namespace Author.Controllers
                     AppAuthorizationClaims claim = new AppAuthorizationClaims(identity);
                     if (claim.UserType == "Author")
                     {
-                        result = await _authorService.EditBook(book);
+                        await _authorService.EditBook(book);
+                        result = "Book Edit sucessfull";
                     }
                 }
                 else
@@ -159,7 +160,7 @@ namespace Author.Controllers
                         if (book != null)
                             return Ok(book);
                         else
-                            result = "Book not found";
+                            return NoContent();
                     } 
                     else
                     {
@@ -197,7 +198,10 @@ namespace Author.Controllers
                     if (claim.UserType == UserType.Author.ToString() && !string.IsNullOrWhiteSpace(claim.UserId))
                     {
                         var result = await _authorService.SearchBook(bookTitle, category, author, price, publisher,Convert.ToInt64(claim.UserId));
-                        return Ok(result.ToList());
+                        if (result.Count() > 0)
+                            return Ok(result.ToList());
+                        else
+                            return NoContent();
                     }
                     else
                     {

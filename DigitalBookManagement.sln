@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenAuthentication", "TokenAuthentication\TokenAuthentication.csproj", "{4F170D87-AF9D-42DD-841D-474302634A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader", "Reader\Reader.csproj", "{43153537-A773-426B-8DDD-2FD81EA59134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reader", "Reader\Reader.csproj", "{43153537-A773-426B-8DDD-2FD81EA59134}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Author", "Author\Author.csproj", "{FF80E70B-566E-4D08-9989-1E20CCE86D11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Author", "Author\Author.csproj", "{FF80E70B-566E-4D08-9989-1E20CCE86D11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReaderApiTestCase", "ReaderApiTestCase\ReaderApiTestCase.csproj", "{9F92E714-B4D9-4866-9FF8-E99ED02A4380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorApiTestCase", "AuthorApiTestCase\AuthorApiTestCase.csproj", "{BAEBA14B-D3EF-493F-AEBC-904408A559D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{FF80E70B-566E-4D08-9989-1E20CCE86D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF80E70B-566E-4D08-9989-1E20CCE86D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF80E70B-566E-4D08-9989-1E20CCE86D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F92E714-B4D9-4866-9FF8-E99ED02A4380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F92E714-B4D9-4866-9FF8-E99ED02A4380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F92E714-B4D9-4866-9FF8-E99ED02A4380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F92E714-B4D9-4866-9FF8-E99ED02A4380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAEBA14B-D3EF-493F-AEBC-904408A559D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAEBA14B-D3EF-493F-AEBC-904408A559D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAEBA14B-D3EF-493F-AEBC-904408A559D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAEBA14B-D3EF-493F-AEBC-904408A559D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

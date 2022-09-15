@@ -26,13 +26,13 @@ namespace TokenAuthentication.Controllers
         /// <param name="user">The user.</param>
         /// <returns>object</returns>
         [HttpPost("ValidateUser")]
-        public IActionResult Validate([FromBody]User user)
+        public async Task<IActionResult> Validate([FromBody]User user)
         {
             string result = string.Empty;
            
             try
             {
-                User validate = _authorTokenService.ValidateUser(user.UserName, user.Password, user.UserType);
+                User validate = await _authorTokenService.ValidateUser(user.UserName, user.Password, user.UserType);
                 if (validate != null)
                 {
                     result = BuildToken(_configuration["Jwt:Key"],
@@ -73,11 +73,11 @@ namespace TokenAuthentication.Controllers
         }
 
         [HttpPost("CheckExistingUser")]
-        public IActionResult CheckExistingUser([FromBody] User user)
+        public async Task<IActionResult> CheckExistingUser([FromBody] User user)
         {
             try
             {
-                User result = _authorTokenService.CheckExistingUser(user.UserName, user.UserType);
+                User result = await _authorTokenService.CheckExistingUser(user.UserName, user.UserType);
 
                 if (result != null)
                 {

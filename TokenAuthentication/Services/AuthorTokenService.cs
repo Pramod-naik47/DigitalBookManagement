@@ -1,4 +1,5 @@
-﻿using TokenAuthentication.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TokenAuthentication.Models;
 
 namespace TokenAuthentication.Services
 {
@@ -10,19 +11,19 @@ namespace TokenAuthentication.Services
             _tokenAuthenticationDbContext = tokenAuthenticationDbContext;
         }
 
-        public User ValidateUser(string userName, string password, string userType)
+        public async Task<User> ValidateUser(string userName, string password, string userType)
         {
-            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.Password == password && x.UserType == userType).FirstOrDefault();
+            var result = await _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.Password == password && x.UserType == userType).ToListAsync();
 
-            return result;
+            return result.FirstOrDefault();
         }
 
-        public User CheckExistingUser(string userName, string userType)
+        public async Task<User> CheckExistingUser(string userName, string userType)
         {
-            var result = _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.UserType == userType).FirstOrDefault();
+            var result = await _tokenAuthenticationDbContext.Users.Where(x => x.UserName == userName && x.UserType == userType).ToListAsync();
 
-            return result;
-        }
+            return result.FirstOrDefault();
+;        }
 
 
     }

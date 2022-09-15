@@ -226,5 +226,32 @@ namespace ReaderApiTestCase.Controllers
                 (result as NoContentResult).StatusCode.Should().Be(204);
             }
         }
+
+        [Fact]
+        public async Task GetRefund_200Status()
+        {
+            //Arrange
+            var readerService = new Mock<IReaderService>();
+            readerService.Setup(r => r.GetRefund(1));
+
+            var httpContext = MockHttpContext.DefaultMockHttpContext();
+            if (httpContext != null)
+            {
+                var sut = new ReaderController(readerService.Object)
+                {
+                    ControllerContext = new ControllerContext()
+                    {
+                        HttpContext = httpContext
+                    }
+                };
+
+                //Act
+                var result = await sut.GetRefund(1);
+
+                //Assert
+                result.GetType().Should().Be(typeof(OkObjectResult));
+                (result as OkObjectResult).StatusCode.Should().Be(200);
+            }
+        }
     }
 }

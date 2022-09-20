@@ -90,18 +90,6 @@ namespace Author.Controllers
         }
 
         /// <summary>
-        /// Locks the or unloc book.
-        /// </summary>
-        /// <param name="book">The book.</param>
-        /// <returns></returns>
-        [HttpPut("LockOrUnlockBook")]
-        public async Task<IActionResult> LockOrUnlocBook([FromBody] Book book)
-        {
-            string result = await _authorService.LockOrUnlocBook(book);
-            return Ok(result.ToList());
-        }
-
-        /// <summary>
         /// Deletes the book.
         /// </summary>
         /// <param name="bookId">The book identifier.</param>

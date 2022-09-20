@@ -55,35 +55,6 @@ namespace Author.Services
             }
             return message;
         }
-        /// <summary>
-        /// This method will lock or unlock the book
-        /// </summary>
-        /// <param name="book">book</param>
-        /// <returns>return a message whether the book is locked or unlocked</returns>
-        public async Task<string> LockOrUnlocBook(Book book)
-        {
-            try
-            {
-                var result = _digitalBookManagementContext.Books.Where(x => x.BookId == book.BookId).FirstOrDefault();
-
-                if (result != null)
-                {
-                    result.Active = book.Active;
-                    result.ModifiedDate = DateTime.Now;
-
-                    _digitalBookManagementContext.Books.Update(result);
-                    await _digitalBookManagementContext.SaveChangesAsync();
-                    string message = result.Active == true ? $"Book {result.BookTitle}unlocked successfully" : $"Book {result.BookTitle} locked successfully";
-
-                    return message;
-                }
-                return $"Input provided is not valid";
-            }
-            catch (Exception ex)
-            {
-                return $"Operation operation faild : {ex.Message}";
-            }
-        }
 
         public async Task DeleteBook(long bookId)
         {
